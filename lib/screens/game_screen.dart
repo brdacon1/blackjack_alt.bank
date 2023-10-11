@@ -55,8 +55,8 @@ class _GameScreen extends State<GameScreen> {
               ),
               child: isWebButton
                   ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
+                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                   children: [
                    ContainerButton(
                     width: 300,
                     height: buttonHeight,
@@ -65,9 +65,7 @@ class _GameScreen extends State<GameScreen> {
                     borderColor: kColorWhite,
                     onTap: () async {
                       game.selectCardPlayer.add(await deck.getBuyCards(game.deckGame?.deckId));
-                      for(int i = 0; i < game.selectCardPlayer.length; i++){
-                        print(game.selectCardPlayer[i]?.cards[0].image);
-                      }
+                      setState(() {});
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -199,18 +197,37 @@ class _GameScreen extends State<GameScreen> {
     );
   }
 
+
   Widget _buildWebLayout() {
     return Row(
       children: [
         Expanded(
-         child: SingleChildScrollView(
-           scrollDirection: Axis.vertical,
-           child: Column(
-             children: <Widget>[
-               Container(color: Colors.blue),
-            ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: <Widget>[
+                Consumer<Game>(
+                  builder: (context, provider, _) {
+                    final reversedList = provider.selectCardPlayer.reversed.toList();
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 20),
+                      child: Wrap(
+                        spacing: 10.0,
+                        runSpacing: 10.0,
+                        children: List.generate(reversedList.length, (index) {
+                          final card = reversedList[index]?.cards[0];
+                          if (card != null) {
+                            return Image.network(card.image);
+                          }
+                          return Container();
+                        }),
+                      ),
+                    );
+                  },
+                )
+              ],
+            ),
           ),
-         ),
         ),
         Expanded(
           flex: 1,
@@ -269,7 +286,26 @@ class _GameScreen extends State<GameScreen> {
             scrollDirection: Axis.horizontal,
             child: Column(
               children: <Widget>[
-                Container(color: Colors.yellow),
+                Consumer<Game>(
+                  builder: (context, provider, _) {
+                    final reversedList = provider.selectCardPlayer.reversed.toList();
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 20),
+                      child: Wrap(
+                        spacing: 10.0,
+                        runSpacing: 10.0,
+                        alignment: WrapAlignment.start,
+                        children: List.generate(reversedList.length, (index) {
+                          final card = reversedList[index]?.cards[0];
+                          if (card != null) {
+                            return Image.network(card.image, scale: 800,);
+                          }
+                          return Container();
+                        }),
+                      ),
+                    );
+                  },
+                )
               ],
             ),
           ),

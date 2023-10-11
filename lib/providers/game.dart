@@ -21,9 +21,12 @@ class Game extends BaseProvider {
     return isMobileLayout(context) ? 60.0 : 60.0;
   }
 
-
   @override
   void cleanProvider() {
     playerName = null;
+    selectCardPlayer = [];
+    selectCardMachine = [];
+    playerName = null;
+    deckGame = null;
   }
 }

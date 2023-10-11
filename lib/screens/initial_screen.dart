@@ -23,18 +23,18 @@ class _InitialScreen extends State<InitialScreen> {
   final FocusNode _userFocus = FocusNode();
   late Deck deck;
   late Game game;
-
   bool _submitted = false;
 
   @override
   void initState() {
+    deck = Provider.of<Deck>(context, listen: false);
+    game = Provider.of<Game>(context, listen: false);
+    game.cleanProvider();
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    deck = Provider.of<Deck>(context, listen: false);
-    game = Provider.of<Game>(context, listen: false);
     super.didChangeDependencies();
   }
 
@@ -61,7 +61,10 @@ class _InitialScreen extends State<InitialScreen> {
     );
   }
 
-  Widget _buildLabel(TextStylesEnum localTextStyle, FontWeight localFontWeight, Color localColor, String localText) {
+  Widget _buildLabel(TextStylesEnum localTextStyle,
+      FontWeight localFontWeight,
+      Color localColor,
+      String localText) {
     return CustomTextSize(
       localText,
       textStyle: localTextStyle,
