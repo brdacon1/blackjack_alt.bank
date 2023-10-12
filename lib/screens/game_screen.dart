@@ -18,7 +18,7 @@ class GameScreen extends StatefulWidget {
 class _GameScreen extends State<GameScreen> {
   late Deck deck;
   late Game game;
-
+  late double widthSizeBox = 0;
   @override
   void initState() {
     super.initState();
@@ -290,23 +290,28 @@ class _GameScreen extends State<GameScreen> {
 
   Widget _buildMobileLayout() {
     final cardWidth = (MediaQuery.of(context).size.width) * 0.25;
+    final totalWidth = MediaQuery.of(context).size.width;
     final selectCardPlayer = game.selectCardPlayer.toList();
     final selectCardMachine = game.selectCardMachine.toList();
     final mobileLayout = game.isMobileLayout(context);
+    widthSizeBox += cardWidth * selectCardPlayer.length;
+
     return Column(
       children: [
         Expanded(
           child: Container(
-            padding: const EdgeInsets.only(left: 10, top: 20),
+            alignment: Alignment.centerRight,
+            width: totalWidth + (cardWidth * selectCardMachine.length),
+            padding: const EdgeInsets.only(top: 50, left: 20),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SizedBox(
-                width: cardWidth * selectCardMachine.length,
+                width: totalWidth + (cardWidth * selectCardMachine.length),
                 child: Stack(
                   children: List.generate(selectCardMachine.length, (index) {
                     final card = selectCardMachine[index]?.cards[0];
                     return Positioned(
-                      left: index * (cardWidth * 0.2),
+                      left: (selectCardMachine.length - 1 - index) * (cardWidth * 0.2),
                       child: Image.network(card?.image ?? '', width: cardWidth),
                     );
                   }),
@@ -371,25 +376,20 @@ class _GameScreen extends State<GameScreen> {
             ],
           ),
         ),
-        const SizedBox(height: 20,),
-        _buildLabel(
-          mobileLayout ? TextStylesEnum.sizeNo18Responsive : TextStylesEnum.sizeNo18Responsive,
-          FontWeight.w700,
-          kColorWhite,
-          game.playerName ?? '',
-        ),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.only(left: 10, top: 20),
+            alignment: Alignment.centerRight,
+            width: totalWidth + (cardWidth * selectCardPlayer.length),
+            padding: const EdgeInsets.only(top: 20, left: 20),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SizedBox(
-                width: cardWidth * selectCardPlayer.length,
+                width: totalWidth + (cardWidth * selectCardPlayer.length),
                 child: Stack(
                   children: List.generate(selectCardPlayer.length, (index) {
                     final card = selectCardPlayer[index]?.cards[0];
                     return Positioned(
-                      left: index * (cardWidth * 0.2),
+                      left: (selectCardPlayer.length - 1 - index) * (cardWidth * 0.2),
                       child: Image.network(card?.image ?? '', width: cardWidth),
                     );
                   }),
