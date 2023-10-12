@@ -67,6 +67,24 @@ class GameScreenButton extends StatelessWidget {
             ],
           ),
         ),
+        // Adicione a label azul redonda aqui
+        Container(
+          width: 40,
+          height: 40,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.blue,
+          ),
+          child: Center(
+            child: CustomTextSize(
+              game.countCardDeck.toString(),
+              textStyle: TextStylesEnum.size28Medium,
+              textAlign: TextAlign.center,
+              fontWeight: FontWeight.w700,
+              color: kColorWhite,
+            ),
+          ),
+        ),
         ContainerButton(
           width: 300,
           height: buttonHeight,
@@ -100,7 +118,7 @@ class GameScreenButton extends StatelessWidget {
           ),
         ),
       ],
-      ) : Row(
+    ) : Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
@@ -141,7 +159,24 @@ class GameScreenButton extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 10),
+        // Adicione a label azul redonda aqui
+        Container(
+          width: 40,
+          height: 40,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.blue,
+          ),
+          child: Center(
+            child: CustomTextSize(
+              game.countCardDeck.toString(),
+              textStyle: TextStylesEnum.size28Medium,
+              textAlign: TextAlign.center,
+              fontWeight: FontWeight.w700,
+              color: kColorWhite,
+            ),
+          ),
+        ),
         Expanded(
           flex: 7,
           child: Padding(

@@ -20,6 +20,7 @@ class _GameScreen extends State<GameScreen> {
   late Deck deck;
   late Game game;
   late double widthSizeBox = 0;
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +30,12 @@ class _GameScreen extends State<GameScreen> {
   void didChangeDependencies() {
     deck = Provider.of<Deck>(context, listen: false);
     game = Provider.of<Game>(context, listen: false);
+    game.countCardDeck = 52;
+    deck.getReshuffleCards(game.deckGame?.deckId).then((value) => {
+      game.deckGame = value,
+
+    });
+    setState(() {});
     super.didChangeDependencies();
   }
 
