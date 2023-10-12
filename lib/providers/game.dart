@@ -4,12 +4,14 @@ import '../models/deck_cards_models.dart';
 import 'base/base_provider.dart';
 
 class Game extends BaseProvider {
+  late int playerPoint = 0;
+  late int machinePoint = 0;
+  late int countCardDeck = 0;
   String? playerName = '';
   late DeckCards? deckGame;
   List<CardModels?> selectCardPlayer = [];
   List<CardModels?> selectCardMachine = [];
-  late int playerPoint = 0;
-  late int machinePoint = 0;
+
 
   bool isFieldEmpty(String? value) {
     return value == null || value.isEmpty;

@@ -1,6 +1,7 @@
 import 'package:blackjack/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../components/atoms/button_game_screen.dart';
 import '../components/atoms/container_button.dart';
 import '../components/atoms/custom_text_size.dart';
 import '../providers/deck.dart';
@@ -52,7 +53,6 @@ class _GameScreen extends State<GameScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     final barHeight = screenHeight * 0.10;
     final buttonHeight = game.calculateButtonHeight(context);
-
     return Scaffold(
       backgroundColor: Colors.green,
       body: Stack(
@@ -68,160 +68,24 @@ class _GameScreen extends State<GameScreen> {
                 borderRadius: BorderRadius.circular(15.0),
                 color: Colors.transparent,
               ),
-              child: isWebButton
-                  ? Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                   children: [
-                   ContainerButton(
-                    width: 300,
-                    height: buttonHeight,
-                    borderRadius: 50,
-                    backgroundColor: kGreenDarkColor,
-                    borderColor: kColorWhite,
-                    onTap: () async {
-                      game.selectCardPlayer.add(await deck.getBuyCards(game.deckGame?.deckId));
-                      game.calculatePointCards(false);
-                      setState(() {});
-                    },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.arrow_drop_down_sharp,
-                          color: kColorWhite,
-                          size: 60,
-                        ),
-                        SizedBox(width: 5),
-                        CustomTextSize(
-                          'Comprar carta',
-                          textStyle: TextStylesEnum.sizeNo18Responsive,
-                          textAlign: TextAlign.center,
-                          fontWeight: FontWeight.w700,
-                          color: kColorWhite,
-                        ),
-                      ],
-                    ),
-                  ),
-                   ContainerButton(
-                    width: 300,
-                    height: buttonHeight,
-                    borderRadius: 50,
-                    backgroundColor: kRedColor,
-                    borderColor: kColorWhite,
-                    onTap: () async {
-                      game.selectCardMachine.add(await deck.getBuyCards(game.deckGame?.deckId));
-                      game.calculatePointCards(true);
-                      setState(() {});
-                    },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.back_hand,
-                          color: kColorWhite,
-                          size: 25,
-                        ),
-                        SizedBox(width: 8),
-                        CustomTextSize(
-                          'Passar a vez',
-                          textStyle: TextStylesEnum.sizeNo18Responsive,
-                          textAlign: TextAlign.center,
-                          fontWeight: FontWeight.w700,
-                          color: kColorWhite,
-                        ),
-                      ],
-                     ),
-                   ),
-                  ],
-                 ) : Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                   Expanded(
-                    flex: 7,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: ContainerButton(
-                        width: double.infinity,
-                        height: buttonHeight,
-                        borderRadius: 50,
-                        backgroundColor: kGreenDarkColor,
-                        borderColor: kColorWhite,
-                        onTap: () async {
-                          game.selectCardPlayer.add(await deck.getBuyCards(game.deckGame?.deckId));
-                          game.calculatePointCards(false);
-                          setState(() {});
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.arrow_drop_down_sharp,
-                              color: kColorWhite,
-                              size: 60,
-                            ),
-                            SizedBox(width: 8),
-                            CustomTextSize(
-                              'Comprar carta',
-                              textStyle: TextStylesEnum.size28Medium,
-                              textAlign: TextAlign.center,
-                              fontWeight: FontWeight.w700,
-                              color: kColorWhite,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    flex: 7,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: ContainerButton(
-                        width: double.infinity,
-                        height: buttonHeight,
-                        borderRadius: 50,
-                        backgroundColor: kRedColor,
-                        borderColor: kColorWhite,
-                        onTap: () async {
-                          game.selectCardMachine.add(await deck.getBuyCards(game.deckGame?.deckId));
-                          game.calculatePointCards(true);
-                          setState(() {});
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.back_hand,
-                              color: kColorWhite,
-                            ),
-                            SizedBox(width: 8),
-                            CustomTextSize(
-                              'Passar a vez',
-                              textStyle: TextStylesEnum.size28Medium,
-                              textAlign: TextAlign.center,
-                              fontWeight: FontWeight.w700,
-                              color: kColorWhite,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
+              child: GameScreenButton(
+                updateParentState: updateParentState,
+                barHeight: barHeight,
+                screenHeight: screenHeight,
+                game: game,
+                deck: deck,
+                isWebButton: isWebButton,
+                buttonHeight: buttonHeight,
+                isWeb: isWeb),
             ),
           ),
         ],
       ),
     );
   }
-
-
+  void updateParentState() {
+    setState(() {});
+  }
   Widget _buildWebLayout() {
     final selectCardPlayer = game.selectCardPlayer.reversed.toList();
     final selectCardMachine = game.selectCardMachine.reversed.toList();

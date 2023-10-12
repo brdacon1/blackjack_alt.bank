@@ -160,6 +160,7 @@ class _InitialScreen extends State<InitialScreen> {
                 game.playerName = _userController.text;
                 await deck.getNewDeck().then((value) => {
                     game.deckGame = value,
+                    game.countCardDeck = 52,
                 });
                 await deck.getReshuffleCards(game.deckGame?.deckId).then((value) => {
                   game.deckGame = value,
