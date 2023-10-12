@@ -23,17 +23,16 @@ class _GameScreen extends State<GameScreen> {
 
   @override
   void initState() {
+    deck = Provider.of<Deck>(context, listen: false);
+    game = Provider.of<Game>(context, listen: false);
+    game.countCardDeck = 52;
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    deck = Provider.of<Deck>(context, listen: false);
-    game = Provider.of<Game>(context, listen: false);
-    game.countCardDeck = 52;
     deck.getReshuffleCards(game.deckGame?.deckId).then((value) => {
       game.deckGame = value,
-
     });
     setState(() {});
     super.didChangeDependencies();
