@@ -284,7 +284,6 @@ class _GameScreen extends State<GameScreen> {
     );
   }
 
-
   Widget _buildMobileLayout() {
     final cardWidth = (MediaQuery.of(context).size.width) * 0.25;
     final selectCardPlayer = game.selectCardPlayer.toList();
@@ -368,6 +367,7 @@ class _GameScreen extends State<GameScreen> {
             ],
           ),
         ),
+        const SizedBox(height: 20,),
         _buildLabel(
           mobileLayout ? TextStylesEnum.sizeNo18Responsive : TextStylesEnum.sizeNo18Responsive,
           FontWeight.w700,
