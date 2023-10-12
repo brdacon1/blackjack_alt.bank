@@ -80,6 +80,7 @@ class _GameScreen extends State<GameScreen> {
                     borderColor: kColorWhite,
                     onTap: () async {
                       game.selectCardPlayer.add(await deck.getBuyCards(game.deckGame?.deckId));
+                      game.calculatePointCards(false);
                       setState(() {});
                     },
                     child: Row(
@@ -110,6 +111,7 @@ class _GameScreen extends State<GameScreen> {
                     borderColor: kColorWhite,
                     onTap: () async {
                       game.selectCardMachine.add(await deck.getBuyCards(game.deckGame?.deckId));
+                      game.calculatePointCards(true);
                       setState(() {});
                     },
                     child: Row(
@@ -148,6 +150,7 @@ class _GameScreen extends State<GameScreen> {
                         borderColor: kColorWhite,
                         onTap: () async {
                           game.selectCardPlayer.add(await deck.getBuyCards(game.deckGame?.deckId));
+                          game.calculatePointCards(false);
                           setState(() {});
                         },
                         child: Row(
@@ -185,6 +188,7 @@ class _GameScreen extends State<GameScreen> {
                         borderColor: kColorWhite,
                         onTap: () async {
                           game.selectCardMachine.add(await deck.getBuyCards(game.deckGame?.deckId));
+                          game.calculatePointCards(true);
                           setState(() {});
                         },
                         child: Row(
@@ -329,7 +333,7 @@ class _GameScreen extends State<GameScreen> {
                         mobileLayout ? TextStylesEnum.sizeNo18Responsive : TextStylesEnum.sizeNo18Responsive,
                         FontWeight.w700,
                         kColorWhite,
-                        '21',
+                        game.machinePoint.toString(),
                       ),
                     ),
                   ),
@@ -358,7 +362,7 @@ class _GameScreen extends State<GameScreen> {
                         mobileLayout ? TextStylesEnum.sizeNo18Responsive : TextStylesEnum.sizeNo18Responsive,
                         FontWeight.w700,
                         kColorWhite,
-                        '21',
+                        game.playerPoint.toString(),
                       ),
                     ),
                   ),
