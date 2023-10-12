@@ -8,8 +8,6 @@ import 'custom_text_size.dart';
 class GameScreenButton extends StatelessWidget {
   final Deck deck;
   final Game game;
-  final TextStylesEnum labelTextStyle;
-  final TextAlign labelTextAlign;
   final bool? isWeb;
   final bool isWebButton;
   final double? screenHeight;
@@ -19,8 +17,6 @@ class GameScreenButton extends StatelessWidget {
 
   const GameScreenButton({
         required this.updateParentState,
-        this.labelTextStyle = TextStylesEnum.size28bold,
-        this.labelTextAlign = TextAlign.center,
         this.isWeb,
         required this.isWebButton,
         this.screenHeight,
@@ -67,7 +63,6 @@ class GameScreenButton extends StatelessWidget {
             ],
           ),
         ),
-        // Adicione a label azul redonda aqui
         Container(
           width: 40,
           height: 40,
@@ -78,7 +73,7 @@ class GameScreenButton extends StatelessWidget {
           child: Center(
             child: CustomTextSize(
               game.countCardDeck.toString(),
-              textStyle: TextStylesEnum.size28Medium,
+              textStyle: TextStylesEnum.sizeNo24Responsive,
               textAlign: TextAlign.center,
               fontWeight: FontWeight.w700,
               color: kColorWhite,
@@ -159,7 +154,6 @@ class GameScreenButton extends StatelessWidget {
             ),
           ),
         ),
-        // Adicione a label azul redonda aqui
         Container(
           width: 40,
           height: 40,
