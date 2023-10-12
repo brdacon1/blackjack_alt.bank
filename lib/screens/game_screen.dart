@@ -31,6 +31,20 @@ class _GameScreen extends State<GameScreen> {
     super.didChangeDependencies();
   }
 
+  Widget _buildLabel(TextStylesEnum localTextStyle,
+      FontWeight localFontWeight,
+      Color localColor,
+      String localText) {
+    return CustomTextSize(
+      localText,
+      textStyle: localTextStyle,
+      textAlign: TextAlign.center,
+      fontWeight: localFontWeight,
+      color: localColor,
+      wrap: true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isWeb = MediaQuery.of(context).size.width > 1100;
@@ -207,74 +221,62 @@ class _GameScreen extends State<GameScreen> {
   Widget _buildWebLayout() {
     final selectCardPlayer = game.selectCardPlayer.reversed.toList();
     final selectCardMachine = game.selectCardMachine.reversed.toList();
+    final cardWidth = (MediaQuery.of(context).size.width) * 0.25;
+    final listCard = (MediaQuery.of(context).size.height);
 
     return Row(
       children: [
         Expanded(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Wrap(
-                      spacing: 10.0,
-                      runSpacing: 10.0,
-                      children: List.generate(selectCardPlayer.length, (index) {
-                        final card = selectCardPlayer[index]?.cards[0];
-                        if (card != null) {
-                          return Image.network(card.image);
-                        }
-                        return Container(color: kColorGreen);
-                      }),
-                    ),
-                  ),
+          child: Container(
+            padding: const EdgeInsets.only(top: 20),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: SizedBox(
+                height: listCard + cardWidth,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: List.generate(selectCardPlayer.length, (index) {
+                    final card = selectCardPlayer[index]?.cards[0];
+                    final topOffset = index * (cardWidth * 0.20);
+                    return Positioned(
+                      top: topOffset,
+                      child: Image.network(card?.image ?? '', height: cardWidth),
+                    );
+                  }).reversed.toList(),
                 ),
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.network('https://www.deckofcardsapi.com/static/img/back.png'),
               ],
             ),
           ),
         ),
         Expanded(
-          child: Row(
-            children: [
-              Expanded(
-                child: Align(
+          child: Container(
+            padding: const EdgeInsets.only(top: 20),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: SizedBox(
+                height: listCard + cardWidth,
+                child: Stack(
                   alignment: Alignment.center,
-                  child: Image.network('https://www.deckofcardsapi.com/static/img/back.png'),
+                  children: List.generate(selectCardMachine.length, (index) {
+                    final card = selectCardMachine[index]?.cards[0];
+                    final topOffset = index * (cardWidth * 0.20);
+                    return Positioned(
+                      top: topOffset,
+                      child: Image.network(card?.image ?? '', height: cardWidth),
+                    );
+                  }).reversed.toList(),
                 ),
               ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-               SizedBox(
-                     height: MediaQuery.of(context).size.height,
-                     child: Padding(
-                      padding: const EdgeInsets.only(top: 200.0, bottom: 20),
-                      child: Wrap(
-                        spacing: 10.0,
-                        runSpacing: 10.0,
-                        children: List.generate(selectCardMachine.length, (index) {
-                          final card = selectCardMachine[index]?.cards[0];
-                          if (card != null) {
-                            return Image.network(card.image);
-                          }
-                          return Container(color: kColorGreen);
-                        }),
-                      ),
-                    ),
-                ),
-              ],
             ),
           ),
         ),
@@ -282,16 +284,17 @@ class _GameScreen extends State<GameScreen> {
     );
   }
 
+
   Widget _buildMobileLayout() {
     final cardWidth = (MediaQuery.of(context).size.width) * 0.25;
     final selectCardPlayer = game.selectCardPlayer.toList();
     final selectCardMachine = game.selectCardMachine.toList();
-
+    final mobileLayout = game.isMobileLayout(context);
     return Column(
       children: [
         Expanded(
           child: Container(
-            padding: const EdgeInsets.only(right: 30, top: 20),
+            padding: const EdgeInsets.only(left: 10, top: 20),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SizedBox(
@@ -310,20 +313,70 @@ class _GameScreen extends State<GameScreen> {
           ),
         ),
         Expanded(
-          child: Row(
+          child: Column(
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.blue,
+                    ),
+                    child: Center(
+                      child: _buildLabel(
+                        mobileLayout ? TextStylesEnum.sizeNo18Responsive : TextStylesEnum.sizeNo18Responsive,
+                        FontWeight.w700,
+                        kColorWhite,
+                        '21',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20,),
               Expanded(
                 child: Align(
                   alignment: Alignment.center,
-                  child: Image.network('https://www.deckofcardsapi.com/static/img/back.png' , width: cardWidth),
+                  child: Image.network('https://www.deckofcardsapi.com/static/img/back.png', width: cardWidth),
                 ),
+              ),
+              const SizedBox(height: 20,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.blue,
+                    ),
+                    child: Center(
+                      child: _buildLabel(
+                        mobileLayout ? TextStylesEnum.sizeNo18Responsive : TextStylesEnum.sizeNo18Responsive,
+                        FontWeight.w700,
+                        kColorWhite,
+                        '21',
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
         ),
+        _buildLabel(
+          mobileLayout ? TextStylesEnum.sizeNo18Responsive : TextStylesEnum.sizeNo18Responsive,
+          FontWeight.w700,
+          kColorWhite,
+          game.playerName ?? '',
+        ),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.only(right: 30, top: 20),
+            padding: const EdgeInsets.only(left: 10, top: 20),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SizedBox(
