@@ -40,6 +40,7 @@ class _GameScreen extends State<GameScreen> {
     final buttonHeight = game.calculateButtonHeight(context);
 
     return Scaffold(
+      backgroundColor: Colors.green,
       body: Stack(
         children: [
           isWeb ? _buildWebLayout() : _buildMobileLayout(),
@@ -93,8 +94,9 @@ class _GameScreen extends State<GameScreen> {
                     borderRadius: 50,
                     backgroundColor: kRedColor,
                     borderColor: kColorWhite,
-                    onTap: () {
-
+                    onTap: () async {
+                      game.selectCardMachine.add(await deck.getBuyCards(game.deckGame?.deckId));
+                      setState(() {});
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -130,8 +132,9 @@ class _GameScreen extends State<GameScreen> {
                         borderRadius: 50,
                         backgroundColor: kGreenDarkColor,
                         borderColor: kColorWhite,
-                        onTap: () {
-
+                        onTap: () async {
+                          game.selectCardPlayer.add(await deck.getBuyCards(game.deckGame?.deckId));
+                          setState(() {});
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -166,7 +169,10 @@ class _GameScreen extends State<GameScreen> {
                         borderRadius: 50,
                         backgroundColor: kRedColor,
                         borderColor: kColorWhite,
-                        onTap: () {},
+                        onTap: () async {
+                          game.selectCardMachine.add(await deck.getBuyCards(game.deckGame?.deckId));
+                          setState(() {});
+                        },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -199,45 +205,47 @@ class _GameScreen extends State<GameScreen> {
 
 
   Widget _buildWebLayout() {
+    final selectCardPlayer = game.selectCardPlayer.reversed.toList();
+    final selectCardMachine = game.selectCardMachine.reversed.toList();
+
     return Row(
       children: [
         Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Consumer<Game>(
-                  builder: (context, provider, _) {
-                    final reversedList = provider.selectCardPlayer.reversed.toList();
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 20),
-                      child: Wrap(
-                        spacing: 10.0,
-                        runSpacing: 10.0,
-                        children: List.generate(reversedList.length, (index) {
-                          final card = reversedList[index]?.cards[0];
-                          if (card != null) {
-                            return Image.network(card.image);
-                          }
-                          return Container();
-                        }),
-                      ),
-                    );
-                  },
-                )
+                SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Wrap(
+                      spacing: 10.0,
+                      runSpacing: 10.0,
+                      children: List.generate(selectCardPlayer.length, (index) {
+                        final card = selectCardPlayer[index]?.cards[0];
+                        if (card != null) {
+                          return Image.network(card.image);
+                        }
+                        return Container(color: kColorGreen);
+                      }),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
         ),
         Expanded(
-          flex: 1,
-          child: Column(
+          child: Row(
             children: [
               Expanded(
-                child: Container(color: Colors.red),
-              ),
-              Expanded(
-                child: Container(color: Colors.green),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Image.network('https://www.deckofcardsapi.com/static/img/back.png'),
+                ),
               ),
             ],
           ),
@@ -246,8 +254,26 @@ class _GameScreen extends State<GameScreen> {
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Container(color: Colors.blue),
+               SizedBox(
+                     height: MediaQuery.of(context).size.height,
+                     child: Padding(
+                      padding: const EdgeInsets.only(top: 200.0, bottom: 20),
+                      child: Wrap(
+                        spacing: 10.0,
+                        runSpacing: 10.0,
+                        children: List.generate(selectCardMachine.length, (index) {
+                          final card = selectCardMachine[index]?.cards[0];
+                          if (card != null) {
+                            return Image.network(card.image);
+                          }
+                          return Container(color: kColorGreen);
+                        }),
+                      ),
+                    ),
+                ),
               ],
             ),
           ),
@@ -257,15 +283,29 @@ class _GameScreen extends State<GameScreen> {
   }
 
   Widget _buildMobileLayout() {
+    final cardWidth = (MediaQuery.of(context).size.width) * 0.25;
+    final selectCardPlayer = game.selectCardPlayer.toList();
+    final selectCardMachine = game.selectCardMachine.toList();
+
     return Column(
       children: [
         Expanded(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Column(
-              children: <Widget>[
-                Container(color: Colors.blue),
-              ],
+          child: Container(
+            padding: const EdgeInsets.only(right: 30, top: 20),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SizedBox(
+                width: cardWidth * selectCardMachine.length,
+                child: Stack(
+                  children: List.generate(selectCardMachine.length, (index) {
+                    final card = selectCardMachine[index]?.cards[0];
+                    return Positioned(
+                      left: index * (cardWidth * 0.2),
+                      child: Image.network(card?.image ?? '', width: cardWidth),
+                    );
+                  }),
+                ),
+              ),
             ),
           ),
         ),
@@ -273,40 +313,31 @@ class _GameScreen extends State<GameScreen> {
           child: Row(
             children: [
               Expanded(
-                child: Container(color: Colors.red),
-              ),
-              Expanded(
-                child: Container(color: Colors.green),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Image.network('https://www.deckofcardsapi.com/static/img/back.png' , width: cardWidth),
+                ),
               ),
             ],
           ),
         ),
         Expanded(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Column(
-              children: <Widget>[
-                Consumer<Game>(
-                  builder: (context, provider, _) {
-                    final reversedList = provider.selectCardPlayer.reversed.toList();
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 20),
-                      child: Wrap(
-                        spacing: 10.0,
-                        runSpacing: 10.0,
-                        alignment: WrapAlignment.start,
-                        children: List.generate(reversedList.length, (index) {
-                          final card = reversedList[index]?.cards[0];
-                          if (card != null) {
-                            return Image.network(card.image, scale: 800,);
-                          }
-                          return Container();
-                        }),
-                      ),
+          child: Container(
+            padding: const EdgeInsets.only(right: 30, top: 20),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SizedBox(
+                width: cardWidth * selectCardPlayer.length,
+                child: Stack(
+                  children: List.generate(selectCardPlayer.length, (index) {
+                    final card = selectCardPlayer[index]?.cards[0];
+                    return Positioned(
+                      left: index * (cardWidth * 0.2),
+                      child: Image.network(card?.image ?? '', width: cardWidth),
                     );
-                  },
-                )
-              ],
+                  }),
+                ),
+              ),
             ),
           ),
         ),

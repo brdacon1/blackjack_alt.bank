@@ -29,7 +29,7 @@ class Http {
 
   static reShuffleCards(String? deckId) async {
     return await _dio.get(
-      "/api/deck/$deckId/shuffle/?remaining=true",
+      "/api/deck/$deckId/shuffle",
       options: Options(
       ),
     );

@@ -158,9 +158,12 @@ class _InitialScreen extends State<InitialScreen> {
                 );
               } else {
                 game.playerName = _userController.text;
-                deck.getShuffleCards('1').then((value) => {
+                await deck.getNewDeck().then((value) => {
                     game.deckGame = value,
-                    Navigator.of(context).pushNamed(GameScreen.routeName),
+                });
+                await deck.getReshuffleCards(game.deckGame?.deckId).then((value) => {
+                  game.deckGame = value,
+                  Navigator.of(context).pushNamed(GameScreen.routeName)
                 });
               }
             },

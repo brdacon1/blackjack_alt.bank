@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../models/card_models.dart';
 import '../models/deck_cards_models.dart';
 import 'base/base_provider.dart';
@@ -18,7 +17,7 @@ class Game extends BaseProvider {
   }
 
   double calculateButtonHeight(BuildContext context) {
-    return isMobileLayout(context) ? 60.0 : 60.0;
+    return isMobileLayout(context) ? 50.0 : 60.0;
   }
 
   @override
