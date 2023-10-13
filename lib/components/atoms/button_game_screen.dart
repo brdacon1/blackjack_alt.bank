@@ -42,6 +42,7 @@ class GameScreenButton extends StatelessWidget {
             game.selectCardPlayer.add(await deck.getBuyCards(game.deckGame?.deckId));
             game.calculatePointCards(false);
             game.countCardDeck -= 1;
+            updateParentState();
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -137,9 +138,8 @@ class GameScreenButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Icon(
-                    Icons.arrow_drop_down_sharp,
+                    Icons.arrow_drop_down_circle_rounded,
                     color: kColorWhite,
-                    size: 60,
                   ),
                   SizedBox(width: 8),
                   CustomTextSize(
