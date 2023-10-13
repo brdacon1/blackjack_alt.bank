@@ -25,17 +25,23 @@ class _GameScreen extends State<GameScreen> {
   void initState() {
     deck = Provider.of<Deck>(context, listen: false);
     game = Provider.of<Game>(context, listen: false);
-    game.countCardDeck = 52;
+    game.countCardDeck = 48;
+    startScreen();
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    deck.getReshuffleCards(game.deckGame?.deckId).then((value) => {
-      game.deckGame = value,
-    });
-    setState(() {});
     super.didChangeDependencies();
+  }
+
+  void updateParentState() {
+    setState(() {});
+  }
+
+  startScreen() async {
+    game.deckGame = await deck.getReshuffleCards(game.deckGame?.deckId);
+    game.startGame(deck, updateParentState);
   }
 
   Widget _buildLabel(TextStylesEnum localTextStyle,
@@ -89,9 +95,7 @@ class _GameScreen extends State<GameScreen> {
       ),
     );
   }
-  void updateParentState() {
-    setState(() {});
-  }
+
   Widget _buildWebLayout() {
     final selectCardPlayer = game.selectCardPlayer.reversed.toList();
     final selectCardMachine = game.selectCardMachine.reversed.toList();

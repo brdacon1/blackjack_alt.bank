@@ -55,7 +55,6 @@ class Deck extends BaseProvider {
    try {
      final result = await Http.buyCards(deckId);
      cardModels = CardModels.fromJson(result.data);
-
      return cardModels;
    } on DioException catch (error) {
      print(error);

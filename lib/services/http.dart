@@ -35,9 +35,9 @@ class Http {
     );
   }
 
-  static buyCards(String? deckId) async {
+  static buyCards(String? deckId, {String quantity = '1'}) async {
     return await _dio.get(
-      "/api/deck/$deckId/draw/?count=1",
+      "/api/deck/$deckId/draw/?count=$quantity",
       options: Options(
       ),
     );

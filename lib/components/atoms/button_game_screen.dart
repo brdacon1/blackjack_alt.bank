@@ -42,6 +42,7 @@ class GameScreenButton extends StatelessWidget {
             game.selectCardPlayer.add(await deck.getBuyCards(game.deckGame?.deckId));
             game.calculatePointCards(false);
             game.countCardDeck -= 1;
+            game.calculateWinner();
             updateParentState();
           },
           child: Row(
@@ -88,10 +89,7 @@ class GameScreenButton extends StatelessWidget {
           backgroundColor: kRedColor,
           borderColor: kColorWhite,
           onTap: () async {
-            game.selectCardMachine.add(await deck.getBuyCards(game.deckGame?.deckId));
-            game.calculatePointCards(true);
-            game.countCardDeck -= 1;
-            updateParentState();
+            game.machineDecision(deck, updateParentState);
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -131,6 +129,7 @@ class GameScreenButton extends StatelessWidget {
                 game.selectCardPlayer.add(await deck.getBuyCards(game.deckGame?.deckId));
                 game.calculatePointCards(false);
                 game.countCardDeck -= 1;
+                game.calculateWinner();
                 updateParentState();
               },
               child: Row(
@@ -182,10 +181,7 @@ class GameScreenButton extends StatelessWidget {
               backgroundColor: kRedColor,
               borderColor: kColorWhite,
               onTap: () async {
-                game.selectCardMachine.add(await deck.getBuyCards(game.deckGame?.deckId));
-                game.calculatePointCards(true);
-                game.countCardDeck -= 1;
-                updateParentState();
+                game.machineDecision(deck, updateParentState);
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
