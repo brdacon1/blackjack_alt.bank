@@ -38,103 +38,81 @@ class GameScreenButton extends StatelessWidget {
          children: [
            Visibility(
              visible: !game.isRestartButton,
-             child: ContainerButton(
-               width: 300,
-               height: buttonHeight,
-               borderRadius: 50,
-               backgroundColor: kGreenDarkColor,
-               borderColor: kColorWhite,
-               onTap: () async {
-                  await game.playerPlaying(deck, updateParentState, showPopup);
-               },
-               child: const Row(
-                 mainAxisSize: MainAxisSize.min,
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   Icon(
-                     Icons.arrow_drop_down_sharp,
-                     color: kColorWhite,
-                     size: 60,
+             child: Expanded(
+               child: Padding(
+                 padding: const EdgeInsets.symmetric(horizontal: 5),
+                 child: ContainerButton(
+                   width: 300,
+                   height: buttonHeight,
+                   borderRadius: 50,
+                   backgroundColor: kGreenDarkColor,
+                   borderColor: kColorWhite,
+                   onTap: () async {
+                     await game.playerPlaying(deck, updateParentState, showPopup);
+                   },
+                   child: const Row(
+                     mainAxisSize: MainAxisSize.min,
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       Icon(
+                         Icons.arrow_drop_down_circle_rounded,
+                         color: kColorWhite,
+                       ),
+                       SizedBox(width: 8),
+                       CustomTextSize(
+                         'Comprar carta',
+                         textStyle: TextStylesEnum.size28Medium,
+                         textAlign: TextAlign.center,
+                         fontWeight: FontWeight.w700,
+                         color: kColorWhite,
+                       ),
+                     ],
                    ),
-                   SizedBox(width: 5),
-                   CustomTextSize(
-                     'Comprar carta',
-                     textStyle: TextStylesEnum.sizeNo18Responsive,
-                     textAlign: TextAlign.center,
-                     fontWeight: FontWeight.w700,
-                     color: kColorWhite,
-                   ),
-                 ],
+                 ),
                ),
-             ),
-         ),
-         Visibility(
-             visible: game.isRestartButton,
-             child: ContainerButton(
-               width: 300,
-               height: buttonHeight,
-               borderRadius: 50,
-               backgroundColor: kGreenDarkColor,
-               borderColor: kColorWhite,
-               onTap: () async {
-                 await game.restartGame(deck, updateParentState, context, startScreen);
-               },
-               child: const Row(
-                 mainAxisSize: MainAxisSize.min,
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   Icon(
-                     Icons.play_arrow,
-                     color: kColorWhite,
-                     size: 25,
-                   ),
-                   SizedBox(width: 8),
-                   CustomTextSize(
-                     'Recomeçar',
-                     textStyle: TextStylesEnum.sizeNo18Responsive,
-                     textAlign: TextAlign.center,
-                     fontWeight: FontWeight.w700,
-                     color: kColorWhite,
-                   ),
-               ],
              ),
            ),
-        ), Visibility(
-             visible: !game.isRestartButton,
-             child:  ContainerButton(
-               width: 300,
-               height: buttonHeight,
-               borderRadius: 50,
-               backgroundColor: kRedColor,
-               borderColor: kColorWhite,
-               onTap: () async {
-                  await game.machineDecision(deck, updateParentState, showPopup);
-               },
-               child: const Row(
-                 mainAxisSize: MainAxisSize.min,
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   Icon(
-                     Icons.back_hand,
-                     color: kColorWhite,
-                     size: 25,
+           Visibility(
+             visible: game.isRestartButton,
+             child: Expanded(
+               flex: 7,
+               child: Padding(
+                 padding: const EdgeInsets.symmetric(horizontal: 5),
+                 child: ContainerButton(
+                   width: 300,
+                   height: buttonHeight,
+                   borderRadius: 50,
+                   backgroundColor: kGreenDarkColor,
+                   borderColor: kColorWhite,
+                   onTap: () async {
+                     await game.restartGame(deck, updateParentState, context, startScreen);
+                   },
+                   child: const Row(
+                     mainAxisSize: MainAxisSize.min,
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       Icon(
+                         Icons.play_arrow,
+                         color: kColorWhite,
+                         size: 25,
+                       ),
+                       SizedBox(width: 8),
+                       CustomTextSize(
+                         'Recomeçar',
+                         textStyle: TextStylesEnum.sizeNo18Responsive,
+                         textAlign: TextAlign.center,
+                         fontWeight: FontWeight.w700,
+                         color: kColorWhite,
+                       ),
+                     ],
                    ),
-                   SizedBox(width: 8),
-                   CustomTextSize(
-                     'Passar a vez',
-                     textStyle: TextStylesEnum.sizeNo18Responsive,
-                     textAlign: TextAlign.center,
-                     fontWeight: FontWeight.w700,
-                     color: kColorWhite,
-                   ),
-                 ],
+                 ),
                ),
              ),
-        ),
-      ],
-    ) : Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+           ),
+      ]) : Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
         Visibility(
           visible: !game.isRestartButton,
           child: Expanded(
@@ -142,7 +120,7 @@ class GameScreenButton extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: ContainerButton(
-                width: double.infinity,
+                width: 300,
                 height: buttonHeight,
                 borderRadius: 50,
                 backgroundColor: kGreenDarkColor,
@@ -174,63 +152,32 @@ class GameScreenButton extends StatelessWidget {
         ),
         Visibility(
           visible: game.isRestartButton,
-          child: ContainerButton(
-          width: 300,
-          height: buttonHeight,
-          borderRadius: 50,
-          backgroundColor: kGreenDarkColor,
-          borderColor: kColorWhite,
-          onTap: () async {
-           await game.restartGame(deck, updateParentState, context, startScreen);
-          },
-          child: const Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.play_arrow,
-                color: kColorWhite,
-                size: 25,
-              ),
-              SizedBox(width: 8),
-              CustomTextSize(
-                'Recomeçar',
-                textStyle: TextStylesEnum.sizeNo18Responsive,
-                textAlign: TextAlign.center,
-                fontWeight: FontWeight.w700,
-                color: kColorWhite,
-              ),
-            ],
-           ),
-          ),
-        ),
-        Visibility(
-          visible: !game.isRestartButton,
           child: Expanded(
             flex: 7,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: ContainerButton(
-                width: double.infinity,
+                width: 300,
                 height: buttonHeight,
                 borderRadius: 50,
-                backgroundColor: kRedColor,
+                backgroundColor: kGreenDarkColor,
                 borderColor: kColorWhite,
                 onTap: () async {
-                 await game.machineDecision(deck, updateParentState, showPopup);
+                  await game.restartGame(deck, updateParentState, context, startScreen);
                 },
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.back_hand,
+                      Icons.play_arrow,
                       color: kColorWhite,
+                      size: 25,
                     ),
                     SizedBox(width: 8),
                     CustomTextSize(
-                      'Passar a vez',
-                      textStyle: TextStylesEnum.size28Medium,
+                      'Recomeçar',
+                      textStyle: TextStylesEnum.sizeNo18Responsive,
                       textAlign: TextAlign.center,
                       fontWeight: FontWeight.w700,
                       color: kColorWhite,

@@ -98,16 +98,9 @@ class Game extends BaseProvider {
   }
 
   Future<void> startGame(Deck deck, VoidCallback updateParentState) async {
-      for(int i = 0; i < 4; i++) {
-         if((i % 2) == 0) {
-           selectCardPlayer.add(await deck.getBuyCards(deckGame?.deckId));
-           calculatePointCards(false);
-         } else {
-           selectCardMachine.add(await deck.getBuyCards(deckGame?.deckId));
-           calculatePointCards(true);
-         }
-         updateParentState();
-      }
+    selectCardMachine.add(await deck.getBuyCards(deckGame?.deckId));
+    calculatePointCards(true);
+    updateParentState();
   }
 
   calculatePointCards(bool isMachine) {
