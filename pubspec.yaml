@@ -61,6 +61,7 @@ flutter:
   assets:
       - assets/blackjack.png
       - assets/cong_example.json
+      - assets/ops.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

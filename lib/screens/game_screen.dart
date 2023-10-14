@@ -29,6 +29,7 @@ class _GameScreen extends State<GameScreen> {
     game = Provider.of<Game>(context, listen: false);
     showPopup = PopupGame();
     startScreen();
+    showPopup.closeLoading(context);
     super.initState();
   }
 

@@ -12,36 +12,40 @@ import 'custom_text_size.dart';
 
 
 class PopupGame {
-
+  bool _isLoading = false;
 
   filterNotify(TypePopupEnum popupEnum, BuildContext context, Game game) async {
     switch (popupEnum) {
       case TypePopupEnum.CONGRATULATIONS:
-         await notificationCongratulations(context, popupEnum.description, game);
+          notificationCongratulations(context, game);
          break;
       case TypePopupEnum.LOSE:
-          await notificationLose(context, popupEnum.description);
+           notificationLose(context, game);
           break;
       case TypePopupEnum.TIED:
-           await notificationTied(context, popupEnum.description);
+            notificationTied(context, game);
            break;
       case TypePopupEnum.ERROR:
-           await notificationError(context, popupEnum.description);
+            notificationError(context, game);
            break;
       case TypePopupEnum.WAIT:
-           await notificationWait(context, popupEnum.description);
+            notificationWait(context, game);
+           break;
+      case TypePopupEnum.CLOSE_WAIT:
+           closeLoading(context);
            break;
       default:
-        return await notificationWait(context, popupEnum.description);
+        return notificationWait(context, game);
     }
   }
 
-  Future<void> notificationCongratulations(BuildContext context, String? message, Game game) async {
+  Future<void> notificationCongratulations(BuildContext context, Game game) async {
     if (context.mounted) {
       final buttonHeight = game.calculateButtonHeight(context);
       await Dialogs.materialDialog(
+          dialogWidth: 20,
           color: Colors.white,
-          msg: 'Parabéns, você venceu!',
+          msg: 'Parabéns, você venceu a partida!',
           title: 'Parabéns!',
           lottieBuilder: Lottie.asset(
             'assets/cong_example.json',
@@ -57,7 +61,7 @@ class PopupGame {
               backgroundColor: kColorGreen,
               borderColor: kColorWhite,
               onTap: () async {
-
+                Navigator.pop(context, true);
               },
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
@@ -83,30 +87,199 @@ class PopupGame {
     }
   }
 
-  Future<void> notificationLose(BuildContext context, String? message) async {
+  Future<void> notificationLose(BuildContext context, Game game) async {
     if (context.mounted) {
-
+      final buttonHeight = game.calculateButtonHeight(context);
+       Dialogs.materialDialog(
+          dialogWidth: 20,
+          color: Colors.white,
+          msg: 'Não foi desta vez, você perdeu a partida!',
+          title: 'Você perdeu a partida!',
+          customViewPosition: CustomViewPosition.BEFORE_ACTION,
+          context: context,
+          actions: [
+            Column(children: [
+              Image.asset(
+                'assets/ops.png',
+                fit: BoxFit.contain,
+                width: 120,
+              ),
+              ContainerButton(
+                width: 250,
+                height: buttonHeight,
+                borderRadius: 50,
+                backgroundColor: kRedColor,
+                borderColor: kColorWhite,
+                onTap: () async {
+                  Navigator.pop(context, true);
+                },
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.check,
+                      color: kColorWhite,
+                      size: 25,
+                    ),
+                    SizedBox(width: 8),
+                    CustomTextSize(
+                      'OK',
+                      textStyle: TextStylesEnum.sizeNo18Responsive,
+                      textAlign: TextAlign.center,
+                      fontWeight: FontWeight.w700,
+                      color: kColorWhite,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+         )
+       ]);
     }
-
   }
 
-  Future<void> notificationTied(BuildContext context, String? message) async {
+  Future<void> notificationTied(BuildContext context, Game game) async {
     if (context.mounted) {
-
+      final buttonHeight = game.calculateButtonHeight(context);
+      Dialogs.materialDialog(
+          dialogWidth: 20,
+          color: kColorWhite,
+          msg: 'Empate, a partida foi empatada!',
+          title: 'Empata na partida!',
+          customViewPosition: CustomViewPosition.BEFORE_ACTION,
+          context: context,
+          actions: [
+            Column(children: [
+              ContainerButton(
+                width: 250,
+                height: buttonHeight,
+                borderRadius: 50,
+                backgroundColor: kColorOrange,
+                borderColor: kColorOrange,
+                onTap: () async {
+                  Navigator.pop(context, true);
+                },
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.check,
+                      color: kColorWhite,
+                      size: 25,
+                    ),
+                    SizedBox(width: 8),
+                    CustomTextSize(
+                      'OK',
+                      textStyle: TextStylesEnum.sizeNo18Responsive,
+                      textAlign: TextAlign.center,
+                      fontWeight: FontWeight.w700,
+                      color: kColorWhite,
+                    ),
+                  ],
+                ),
+              ),
+             ],
+            )
+          ]
+      );
     }
-
   }
 
-  Future<void> notificationError(BuildContext context, String? message)async {
+  Future<void> notificationError(BuildContext context, Game game)async {
     if (context.mounted) {
-
+      final buttonHeight = game.calculateButtonHeight(context);
+      Dialogs.materialDialog(
+          dialogWidth: 20,
+          color: Colors.white,
+          msg: 'Algo deu erro!',
+          title: 'Tente novamente!',
+          customViewPosition: CustomViewPosition.BEFORE_ACTION,
+          context: context,
+          actions: [
+            Column(children: [
+              ContainerButton(
+                width: 250,
+                height: buttonHeight,
+                borderRadius: 50,
+                backgroundColor: kRedColor,
+                borderColor: kColorWhite,
+                onTap: () async {
+                  Navigator.pop(context, true);
+                },
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.check,
+                      color: kColorWhite,
+                      size: 25,
+                    ),
+                    SizedBox(width: 8),
+                    CustomTextSize(
+                      'OK',
+                      textStyle: TextStylesEnum.sizeNo18Responsive,
+                      textAlign: TextAlign.center,
+                      fontWeight: FontWeight.w700,
+                      color: kColorWhite,
+                    ),
+                  ],
+                ),
+              ),
+            ])
+          ]
+      );
     }
   }
 
-  Future<void> notificationWait(BuildContext context, String? message) async {
-    if (context.mounted) {
+  Future<void> notificationWait(BuildContext context, Game game) async {
+    _isLoading = true;
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: AlertDialog(
+            backgroundColor: Colors.transparent,
+            content: Container(
+              width: 150,
+              height: 150,
+              decoration: BoxDecoration(
+                color: kColorWhite,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: const Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  CircularProgressIndicator(
+                    color: kColorGreyDark,
+                  ),
+                  SizedBox(height: 16),
+                  CustomTextSize(
+                    'Aguarde...',
+                    textStyle: TextStylesEnum.size18Medium,
+                    textAlign: TextAlign.center,
+                    fontWeight: FontWeight.w700,
+                    color: kColorGreyDark,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    ).then((value) {
+      _isLoading = false;
+    });
+  }
 
+  void  closeLoading(BuildContext context) {
+    if (_isLoading) {
+      Navigator.of(context, rootNavigator: true).pop();
     }
-
   }
 }

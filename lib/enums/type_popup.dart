@@ -5,7 +5,8 @@ enum TypePopupEnum {
   CONGRATULATIONS(1, 'Parabéns você venceu!'),
   WAIT(2, 'Aguarde...'),
   LOSE(3, 'Você perdeu!'),
-  TIED(4, 'Jogo empatado!');
+  TIED(4, 'Jogo empatado!'),
+  CLOSE_WAIT(5, 'Jogo empatado!');
 
   final int value;
   final String description;

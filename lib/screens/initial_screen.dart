@@ -1,8 +1,10 @@
+import 'package:blackjack/enums/enums.dart';
 import 'package:blackjack/utils/calculate_height.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../components/atoms/container_button.dart';
 import '../components/atoms/custom_text_size.dart';
+import '../components/atoms/popup_game.dart';
 import '../constants/colors.dart';
 import '../providers/deck.dart';
 import '../providers/game.dart';
@@ -23,6 +25,7 @@ class _InitialScreen extends State<InitialScreen> {
   final FocusNode _userFocus = FocusNode();
   late Deck deck;
   late Game game;
+  late PopupGame showPopup;
   bool _submitted = false;
 
   @override
@@ -31,6 +34,7 @@ class _InitialScreen extends State<InitialScreen> {
     game = Provider.of<Game>(context, listen: false);
     game.cleanProvider();
     deck.cleanProvider();
+    showPopup = PopupGame();
     super.initState();
   }
 
@@ -157,8 +161,10 @@ class _InitialScreen extends State<InitialScreen> {
                   ),
                 );
               } else {
+                showPopup.filterNotify(TypePopupEnum.WAIT, context, game);
                 deck.getNewDeck().then((value) => {
                     game.deckGame = value,
+                    showPopup.filterNotify(TypePopupEnum.CLOSE_WAIT, context, game),
                     Navigator.of(context).pushNamed(GameScreen.routeName)
                 });
               }
