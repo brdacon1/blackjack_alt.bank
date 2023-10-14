@@ -257,11 +257,12 @@ class PopupGame {
                 children: <Widget>[
                   CircularProgressIndicator(
                     color: kColorGreyDark,
+                    strokeWidth: 5,
                   ),
                   SizedBox(height: 16),
                   CustomTextSize(
                     'Aguarde...',
-                    textStyle: TextStylesEnum.size18Medium,
+                    textStyle: TextStylesEnum.size36bold,
                     textAlign: TextAlign.center,
                     fontWeight: FontWeight.w700,
                     color: kColorGreyDark,
