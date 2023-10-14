@@ -14,8 +14,10 @@ class GameScreenButton extends StatelessWidget {
   final double? barHeight;
   final double? buttonHeight;
   final VoidCallback updateParentState;
+  final VoidCallback startScreen;
 
   const GameScreenButton({
+        required this.startScreen,
         required this.updateParentState,
         this.isWeb,
         required this.isWebButton,
@@ -41,7 +43,7 @@ class GameScreenButton extends StatelessWidget {
                backgroundColor: kGreenDarkColor,
                borderColor: kColorWhite,
                onTap: () async {
-                 game.playerPlaying(deck, updateParentState);
+                  await game.playerPlaying(deck, updateParentState);
                },
                child: Row(
                  mainAxisSize: MainAxisSize.min,
@@ -73,7 +75,7 @@ class GameScreenButton extends StatelessWidget {
                backgroundColor: kGreenDarkColor,
                borderColor: kColorWhite,
                onTap: () async {
-
+                 await game.restartGame(deck, updateParentState, context, startScreen);
                },
                child: Row(
                  mainAxisSize: MainAxisSize.min,
@@ -104,7 +106,7 @@ class GameScreenButton extends StatelessWidget {
                backgroundColor: kRedColor,
                borderColor: kColorWhite,
                onTap: () async {
-                 game.machineDecision(deck, updateParentState);
+                  await game.machineDecision(deck, updateParentState);
                },
                child: Row(
                  mainAxisSize: MainAxisSize.min,
@@ -144,7 +146,7 @@ class GameScreenButton extends StatelessWidget {
                 backgroundColor: kGreenDarkColor,
                 borderColor: kColorWhite,
                 onTap: () async {
-                  game.playerPlaying(deck, updateParentState);
+                  await game.playerPlaying(deck, updateParentState);
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -177,7 +179,7 @@ class GameScreenButton extends StatelessWidget {
           backgroundColor: kGreenDarkColor,
           borderColor: kColorWhite,
           onTap: () async {
-
+           await game.restartGame(deck, updateParentState, context, startScreen);
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -213,7 +215,7 @@ class GameScreenButton extends StatelessWidget {
                 backgroundColor: kRedColor,
                 borderColor: kColorWhite,
                 onTap: () async {
-                  game.machineDecision(deck, updateParentState);
+                 await game.machineDecision(deck, updateParentState);
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,

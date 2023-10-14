@@ -85,6 +85,7 @@ class _GameScreen extends State<GameScreen> {
                 color: Colors.transparent,
               ),
               child: GameScreenButton(
+                startScreen: startScreen,
                 updateParentState: updateParentState,
                 barHeight: barHeight,
                 screenHeight: screenHeight,

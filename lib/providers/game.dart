@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/card_models.dart';
 import '../models/deck_cards_models.dart';
 import 'base/base_provider.dart';
@@ -71,13 +72,24 @@ class Game extends BaseProvider {
   }
 
   Future<void> playerPlaying(Deck deck, VoidCallback updateParentState) async {
-    while (!playerWinner && !machineWinner) {
+    if (!playerWinner && !machineWinner) {
       print("Player is playing...");
       selectCardPlayer.add(await deck.getBuyCards(deckGame?.deckId));
       calculatePointCards(false);
       calculateWinner();
       updateParentState();
     }
+  }
+
+  Future<void> restartGame(Deck deck, VoidCallback updateParentState, BuildContext context, VoidCallback startScreen) async {
+    deck = Provider.of<Deck>(context, listen: false);
+    cleanProvider();
+    deck.cleanProvider();
+    await deck.getNewDeck().then((result) {
+      deckGame = result;
+    });
+    startScreen();
+    updateParentState();
   }
 
   Future<void> startGame(Deck deck, VoidCallback updateParentState) async {
