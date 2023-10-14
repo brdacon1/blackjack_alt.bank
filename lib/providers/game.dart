@@ -10,7 +10,6 @@ class Game extends BaseProvider {
   late bool playerWinner = false;
   late bool machineWinner = false;
   late bool isRestartButton = false;
-  String? playerName = '';
   late DeckCards? deckGame;
   List<CardModels?> selectCardPlayer = [];
   List<CardModels?> selectCardMachine = [];
@@ -50,10 +49,13 @@ class Game extends BaseProvider {
     }
 
     if(playerWinner && machineWinner) {
+      print("Jogo empatado!");
       isRestartButton = true;
     } else if (machineWinner) {
+      print("Você perdeu!");
       isRestartButton = true;
     } else if (playerWinner) {
+      print("Você venceu!");
       isRestartButton = true;
     }
   }
@@ -131,7 +133,6 @@ class Game extends BaseProvider {
     playerWinner = false;
     machineWinner = false;
     isRestartButton = false;
-    playerName = null;
     selectCardPlayer = [];
     selectCardMachine = [];
   }

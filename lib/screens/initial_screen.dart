@@ -30,6 +30,7 @@ class _InitialScreen extends State<InitialScreen> {
     deck = Provider.of<Deck>(context, listen: false);
     game = Provider.of<Game>(context, listen: false);
     game.cleanProvider();
+    deck.cleanProvider();
     super.initState();
   }
 
@@ -121,7 +122,6 @@ class _InitialScreen extends State<InitialScreen> {
                   ),
                 );
               } else {
-                game.playerName = _userController.text;
                 deck.getNewDeck().then((result) {
                   game.deckGame = result;
                   Navigator.of(context).pushNamed(GameScreen.routeName);
@@ -157,7 +157,6 @@ class _InitialScreen extends State<InitialScreen> {
                   ),
                 );
               } else {
-                game.playerName = _userController.text;
                 deck.getNewDeck().then((value) => {
                     game.deckGame = value,
                     Navigator.of(context).pushNamed(GameScreen.routeName)

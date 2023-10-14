@@ -70,17 +70,17 @@ class GameScreenButton extends StatelessWidget {
                width: 300,
                height: buttonHeight,
                borderRadius: 50,
-               backgroundColor: kRedColor,
+               backgroundColor: kGreenDarkColor,
                borderColor: kColorWhite,
                onTap: () async {
-                 game.machineDecision(deck, updateParentState);
+
                },
                child: Row(
                  mainAxisSize: MainAxisSize.min,
                  mainAxisAlignment: MainAxisAlignment.center,
                  children: const [
                    Icon(
-                     Icons.back_hand,
+                     Icons.play_arrow,
                      color: kColorWhite,
                      size: 25,
                    ),
@@ -95,8 +95,7 @@ class GameScreenButton extends StatelessWidget {
                ],
              ),
            ),
-        ),
-           Visibility(
+        ), Visibility(
              visible: !game.isRestartButton,
              child:  ContainerButton(
                width: 300,
@@ -175,17 +174,17 @@ class GameScreenButton extends StatelessWidget {
           width: 300,
           height: buttonHeight,
           borderRadius: 50,
-          backgroundColor: kRedColor,
+          backgroundColor: kGreenDarkColor,
           borderColor: kColorWhite,
           onTap: () async {
-            game.machineDecision(deck, updateParentState);
+
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
               Icon(
-                Icons.back_hand,
+                Icons.play_arrow,
                 color: kColorWhite,
                 size: 25,
               ),

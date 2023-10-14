@@ -38,8 +38,13 @@ class _GameScreen extends State<GameScreen> {
   }
 
   startScreen() async {
-    game.deckGame = await deck.getReshuffleCards(game.deckGame?.deckId);
-    game.startGame(deck, updateParentState);
+    if(game.deckGame != null) {
+      game.deckGame = await deck.getReshuffleCards(game.deckGame?.deckId);
+      game.startGame(deck, updateParentState);
+      game.isRestartButton = false;
+    } else {
+      game.isRestartButton = true;
+    }
   }
 
   Widget _buildLabel(TextStylesEnum localTextStyle,

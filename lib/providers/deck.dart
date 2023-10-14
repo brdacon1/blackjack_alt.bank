@@ -14,9 +14,11 @@ class Deck extends BaseProvider {
       final result = await Http.createNewDeck();
       return DeckCards.fromJson(result.data);
     } on DioException catch (error) {
-
+      cardModels = null;
+      addPileModels = null;
       rethrow;
     } catch (error) {
+      cleanProvider();
       rethrow;
     } finally {
       notifyListeners();
@@ -28,7 +30,7 @@ class Deck extends BaseProvider {
      final result = await Http.shuffleCards(deckCount);
      return DeckCards.fromJson(result.data);
    } on DioException catch (error) {
-
+     cleanProvider();
      rethrow;
    } catch (error) {
      rethrow;
@@ -42,7 +44,7 @@ class Deck extends BaseProvider {
      final result = await Http.reShuffleCards(deckId);
      return DeckCards.fromJson(result.data);
    } on DioException catch (error) {
-
+     cleanProvider();
      rethrow;
    } catch (error) {
      rethrow;
@@ -57,6 +59,7 @@ class Deck extends BaseProvider {
      cardModels = CardModels.fromJson(result.data);
      return cardModels;
    } on DioException catch (error) {
+     cleanProvider();
      print(error);
      rethrow;
    } catch (error) {
@@ -70,10 +73,9 @@ class Deck extends BaseProvider {
     try {
       final result = await Http.addPiles(deckId, cardList, pileName);
       addPileModels = AddPileModels.fromJson(result.data);
-
       return addPileModels;
     } on DioException catch (error) {
-
+      cleanProvider();
       rethrow;
     } catch (error) {
       rethrow;
@@ -86,10 +88,9 @@ class Deck extends BaseProvider {
     try {
       final result = await Http.shufflePiles(deckId, pileName);
       addPileModels = AddPileModels.fromJson(result.data);
-
       return addPileModels;
     } on DioException catch (error) {
-
+      cleanProvider();
       rethrow;
     } catch (error) {
       rethrow;
