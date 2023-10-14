@@ -15,10 +15,12 @@ class GameScreenButton extends StatelessWidget {
   final double? buttonHeight;
   final VoidCallback updateParentState;
   final VoidCallback startScreen;
+  final VoidCallback showPopup;
 
   const GameScreenButton({
         required this.startScreen,
         required this.updateParentState,
+        required this.showPopup,
         this.isWeb,
         required this.isWebButton,
         this.screenHeight,
@@ -43,12 +45,12 @@ class GameScreenButton extends StatelessWidget {
                backgroundColor: kGreenDarkColor,
                borderColor: kColorWhite,
                onTap: () async {
-                  await game.playerPlaying(deck, updateParentState);
+                  await game.playerPlaying(deck, updateParentState, showPopup);
                },
-               child: Row(
+               child: const Row(
                  mainAxisSize: MainAxisSize.min,
                  mainAxisAlignment: MainAxisAlignment.center,
-                 children: const [
+                 children: [
                    Icon(
                      Icons.arrow_drop_down_sharp,
                      color: kColorWhite,
@@ -77,10 +79,10 @@ class GameScreenButton extends StatelessWidget {
                onTap: () async {
                  await game.restartGame(deck, updateParentState, context, startScreen);
                },
-               child: Row(
+               child: const Row(
                  mainAxisSize: MainAxisSize.min,
                  mainAxisAlignment: MainAxisAlignment.center,
-                 children: const [
+                 children: [
                    Icon(
                      Icons.play_arrow,
                      color: kColorWhite,
@@ -106,12 +108,12 @@ class GameScreenButton extends StatelessWidget {
                backgroundColor: kRedColor,
                borderColor: kColorWhite,
                onTap: () async {
-                  await game.machineDecision(deck, updateParentState);
+                  await game.machineDecision(deck, updateParentState, showPopup);
                },
-               child: Row(
+               child: const Row(
                  mainAxisSize: MainAxisSize.min,
                  mainAxisAlignment: MainAxisAlignment.center,
-                 children: const [
+                 children: [
                    Icon(
                      Icons.back_hand,
                      color: kColorWhite,
@@ -146,12 +148,12 @@ class GameScreenButton extends StatelessWidget {
                 backgroundColor: kGreenDarkColor,
                 borderColor: kColorWhite,
                 onTap: () async {
-                  await game.playerPlaying(deck, updateParentState);
+                  await game.playerPlaying(deck, updateParentState, showPopup);
                 },
-                child: Row(
+                child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.arrow_drop_down_circle_rounded,
                       color: kColorWhite,
@@ -181,10 +183,10 @@ class GameScreenButton extends StatelessWidget {
           onTap: () async {
            await game.restartGame(deck, updateParentState, context, startScreen);
           },
-          child: Row(
+          child: const Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Icon(
                 Icons.play_arrow,
                 color: kColorWhite,
@@ -215,12 +217,12 @@ class GameScreenButton extends StatelessWidget {
                 backgroundColor: kRedColor,
                 borderColor: kColorWhite,
                 onTap: () async {
-                 await game.machineDecision(deck, updateParentState);
+                 await game.machineDecision(deck, updateParentState, showPopup);
                 },
-                child: Row(
+                child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.back_hand,
                       color: kColorWhite,

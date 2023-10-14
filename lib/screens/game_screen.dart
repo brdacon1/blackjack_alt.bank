@@ -1,3 +1,4 @@
+import 'package:blackjack/components/atoms/popup_game.dart';
 import 'package:blackjack/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,11 +20,14 @@ class _GameScreen extends State<GameScreen> {
   late Deck deck;
   late Game game;
   late double widthSizeBox = 0;
+  late PopupGame showPopup;
+
 
   @override
   void initState() {
     deck = Provider.of<Deck>(context, listen: false);
     game = Provider.of<Game>(context, listen: false);
+    showPopup = PopupGame();
     startScreen();
     super.initState();
   }
@@ -45,6 +49,10 @@ class _GameScreen extends State<GameScreen> {
     } else {
       game.isRestartButton = true;
     }
+  }
+
+  showPopupFunction() async {
+    showPopup.filterNotify(game.typePopupEnum, context, game);
   }
 
   Widget _buildLabel(TextStylesEnum localTextStyle,
@@ -85,6 +93,7 @@ class _GameScreen extends State<GameScreen> {
                 color: Colors.transparent,
               ),
               child: GameScreenButton(
+                showPopup: showPopupFunction,
                 startScreen: startScreen,
                 updateParentState: updateParentState,
                 barHeight: barHeight,

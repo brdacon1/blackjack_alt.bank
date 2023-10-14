@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../enums/type_popup.dart';
 import '../models/card_models.dart';
 import '../models/deck_cards_models.dart';
 import 'base/base_provider.dart';
@@ -12,6 +13,7 @@ class Game extends BaseProvider {
   late bool machineWinner = false;
   late bool isRestartButton = false;
   late DeckCards? deckGame;
+  late TypePopupEnum typePopupEnum;
   List<CardModels?> selectCardPlayer = [];
   List<CardModels?> selectCardMachine = [];
 
@@ -27,7 +29,7 @@ class Game extends BaseProvider {
     return isMobileLayout(context) ? 50.0 : 60.0;
   }
 
-  void calculateWinner() {
+  void calculateWinner(VoidCallback showPopup) {
     if (playerPoint <= 21 && machinePoint > 21) {
       playerWinner = true;
       machineWinner = false;
@@ -50,33 +52,36 @@ class Game extends BaseProvider {
     }
 
     if(playerWinner && machineWinner) {
-      print("Jogo empatado!");
+      typePopupEnum = TypePopupEnum.TIED;
       isRestartButton = true;
+      showPopup();
     } else if (machineWinner) {
-      print("Você perdeu!");
+      typePopupEnum = TypePopupEnum.LOSE;
       isRestartButton = true;
+      showPopup();
     } else if (playerWinner) {
-      print("Você venceu!");
+      typePopupEnum = TypePopupEnum.CONGRATULATIONS;
       isRestartButton = true;
+      showPopup();
     }
   }
 
-  Future<void> machineDecision(Deck deck, VoidCallback updateParentState) async {
+  Future<void> machineDecision(Deck deck, VoidCallback updateParentState, VoidCallback showPopup) async {
     while (!playerWinner && !machineWinner) {
       print("Machine is playing...");
       selectCardMachine.add(await deck.getBuyCards(deckGame?.deckId));
       calculatePointCards(true);
-      calculateWinner();
+      calculateWinner(showPopup);
       updateParentState();
     }
   }
 
-  Future<void> playerPlaying(Deck deck, VoidCallback updateParentState) async {
+  Future<void> playerPlaying(Deck deck, VoidCallback updateParentState, VoidCallback showPopup) async {
     if (!playerWinner && !machineWinner) {
       print("Player is playing...");
       selectCardPlayer.add(await deck.getBuyCards(deckGame?.deckId));
       calculatePointCards(false);
-      calculateWinner();
+      calculateWinner(showPopup);
       updateParentState();
     }
   }
