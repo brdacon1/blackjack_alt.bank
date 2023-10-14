@@ -2,7 +2,6 @@ import 'package:blackjack/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../components/atoms/button_game_screen.dart';
-import '../components/atoms/container_button.dart';
 import '../components/atoms/custom_text_size.dart';
 import '../providers/deck.dart';
 import '../providers/game.dart';
@@ -25,7 +24,6 @@ class _GameScreen extends State<GameScreen> {
   void initState() {
     deck = Provider.of<Deck>(context, listen: false);
     game = Provider.of<Game>(context, listen: false);
-    game.countCardDeck = 48;
     startScreen();
     super.initState();
   }
@@ -65,6 +63,7 @@ class _GameScreen extends State<GameScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     final barHeight = screenHeight * 0.10;
     final buttonHeight = game.calculateButtonHeight(context);
+
     return Scaffold(
       backgroundColor: Colors.green,
       body: Stack(

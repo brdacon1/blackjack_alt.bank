@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import '../models/card_models.dart';
 import '../models/deck_cards_models.dart';
@@ -9,14 +7,13 @@ import 'deck.dart';
 class Game extends BaseProvider {
   late int playerPoint = 0;
   late int machinePoint = 0;
-  late int countCardDeck = 0;
   late bool playerWinner = false;
   late bool machineWinner = false;
+  late bool isRestartButton = false;
   String? playerName = '';
   late DeckCards? deckGame;
   List<CardModels?> selectCardPlayer = [];
   List<CardModels?> selectCardMachine = [];
-  final DateTime now = DateTime.now();
 
   bool isFieldEmpty(String? value) {
     return value == null || value.isEmpty;
@@ -49,17 +46,17 @@ class Game extends BaseProvider {
     } else {
       playerWinner = false;
       machineWinner = false;
+      isRestartButton = false;
     }
 
     if(playerWinner && machineWinner) {
-      print("Empate");
+      isRestartButton = true;
     } else if (machineWinner) {
-      print("Você perdeu");
+      isRestartButton = true;
     } else if (playerWinner) {
-      print("Você ganhou");
+      isRestartButton = true;
     }
   }
-
 
   Future<void> machineDecision(Deck deck, VoidCallback updateParentState) async {
     while (!playerWinner && !machineWinner) {
@@ -71,6 +68,15 @@ class Game extends BaseProvider {
     }
   }
 
+  Future<void> playerPlaying(Deck deck, VoidCallback updateParentState) async {
+    while (!playerWinner && !machineWinner) {
+      print("Player is playing...");
+      selectCardPlayer.add(await deck.getBuyCards(deckGame?.deckId));
+      calculatePointCards(false);
+      calculateWinner();
+      updateParentState();
+    }
+  }
 
   Future<void> startGame(Deck deck, VoidCallback updateParentState) async {
       for(int i = 0; i < 4; i++) {
@@ -119,12 +125,14 @@ class Game extends BaseProvider {
 
   @override
   void cleanProvider() {
-    machinePoint = 0;
+    deckGame = null;
     playerPoint = 0;
+    machinePoint = 0;
+    playerWinner = false;
+    machineWinner = false;
+    isRestartButton = false;
     playerName = null;
     selectCardPlayer = [];
     selectCardMachine = [];
-    playerName = null;
-    deckGame = null;
   }
 }
