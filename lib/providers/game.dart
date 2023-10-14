@@ -36,9 +36,6 @@ class Game extends BaseProvider {
     } else if (machinePoint <= 21 && playerPoint > 21) {
       playerWinner = false;
       machineWinner = true;
-    } else if (playerPoint == machinePoint) {
-      playerWinner = true;
-      machineWinner = true;
     } else if (machinePoint == 21) {
       playerWinner = false;
       machineWinner = true;
@@ -51,11 +48,7 @@ class Game extends BaseProvider {
       isRestartButton = false;
     }
 
-    if(playerWinner && machineWinner) {
-      typePopupEnum = TypePopupEnum.TIED;
-      isRestartButton = true;
-      showPopup();
-    } else if (machineWinner) {
+    if (machineWinner) {
       typePopupEnum = TypePopupEnum.LOSE;
       isRestartButton = true;
       showPopup();
