@@ -66,8 +66,8 @@ class Game extends BaseProvider {
     }
   }
 
-  Future<void> machineDecision(Deck deck, VoidCallback updateParentState, VoidCallback showPopup) async {
-    while (!playerWinner && !machineWinner) {
+  Future<void> machinePlaying(Deck deck, VoidCallback updateParentState, VoidCallback showPopup) async {
+    if (!playerWinner && !machineWinner) {
       print("Machine is playing...");
       selectCardMachine.add(await deck.getBuyCards(deckGame?.deckId));
       calculatePointCards(true);

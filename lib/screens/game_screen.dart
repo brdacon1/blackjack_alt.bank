@@ -120,24 +120,48 @@ class _GameScreen extends State<GameScreen> {
     return Row(
       children: [
         Expanded(
-          child: Container(
-            padding: const EdgeInsets.only(top: 20),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: SizedBox(
-                height: listCard + cardWidth,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: List.generate(selectCardPlayer.length, (index) {
-                    final card = selectCardPlayer[index]?.cards[0];
-                    final topOffset = index * (cardWidth * 0.20);
-                    return Positioned(
-                      top: topOffset,
-                      child: Image.network(card?.image ?? '', height: cardWidth),
-                    );
-                  }).reversed.toList(),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blue,
+                      ),
+                      child: Center(
+                        child: _buildLabel(
+                          TextStylesEnum.sizeNo18Responsive,
+                          FontWeight.w700,
+                          kColorWhite,
+                          game.playerPoint.toString(),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+                Container(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: SizedBox(
+                    height: listCard + cardWidth,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: List.generate(selectCardPlayer.length, (index) {
+                        final card = selectCardPlayer[index]?.cards[0];
+                        final topOffset = index * (cardWidth * 0.20);
+                        return Positioned(
+                          top: topOffset,
+                          child: Image.network(card?.image ?? '', height: cardWidth),
+                        );
+                      }).reversed.toList(),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -152,24 +176,48 @@ class _GameScreen extends State<GameScreen> {
           ),
         ),
         Expanded(
-          child: Container(
-            padding: const EdgeInsets.only(top: 20),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: SizedBox(
-                height: listCard + cardWidth,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: List.generate(selectCardMachine.length, (index) {
-                    final card = selectCardMachine[index]?.cards[0];
-                    final topOffset = index * (cardWidth * 0.20);
-                    return Positioned(
-                      top: topOffset,
-                      child: Image.network(card?.image ?? '', height: cardWidth),
-                    );
-                  }).reversed.toList(),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blue,
+                      ),
+                      child: Center(
+                        child: _buildLabel(
+                          TextStylesEnum.sizeNo18Responsive,
+                          FontWeight.w700,
+                          kColorWhite,
+                          game.machinePoint.toString(),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+                Container(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: SizedBox(
+                    height: listCard + cardWidth,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: List.generate(selectCardMachine.length, (index) {
+                        final card = selectCardMachine[index]?.cards[0];
+                        final topOffset = index * (cardWidth * 0.20);
+                        return Positioned(
+                          top: topOffset,
+                          child: Image.network(card?.image ?? '', height: cardWidth),
+                        );
+                      }).reversed.toList(),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -216,8 +264,8 @@ class _GameScreen extends State<GameScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    width: 40,
-                    height: 40,
+                    width: 50,
+                    height: 50,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.blue,
@@ -245,8 +293,8 @@ class _GameScreen extends State<GameScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    width: 40,
-                    height: 40,
+                    width: 50,
+                    height: 50,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.blue,

@@ -49,6 +49,9 @@ class GameScreenButton extends StatelessWidget {
                    borderColor: kColorWhite,
                    onTap: () async {
                      await game.playerPlaying(deck, updateParentState, showPopup);
+                     Future.delayed(const Duration(milliseconds: 3000), () async {
+                       await game.machinePlaying(deck, updateParentState, showPopup);
+                     });
                    },
                    child: const Row(
                      mainAxisSize: MainAxisSize.min,
@@ -61,7 +64,7 @@ class GameScreenButton extends StatelessWidget {
                        SizedBox(width: 8),
                        CustomTextSize(
                          'Comprar carta',
-                         textStyle: TextStylesEnum.size28Medium,
+                         textStyle: TextStylesEnum.sizeNo18Responsive,
                          textAlign: TextAlign.center,
                          fontWeight: FontWeight.w700,
                          color: kColorWhite,
@@ -116,7 +119,6 @@ class GameScreenButton extends StatelessWidget {
         Visibility(
           visible: !game.isRestartButton,
           child: Expanded(
-            flex: 7,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: ContainerButton(
@@ -127,6 +129,9 @@ class GameScreenButton extends StatelessWidget {
                 borderColor: kColorWhite,
                 onTap: () async {
                   await game.playerPlaying(deck, updateParentState, showPopup);
+                  Future.delayed(const Duration(milliseconds: 3000), () async {
+                    await game.machinePlaying(deck, updateParentState, showPopup);
+                  });
                 },
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
@@ -139,7 +144,7 @@ class GameScreenButton extends StatelessWidget {
                     SizedBox(width: 8),
                     CustomTextSize(
                       'Comprar carta',
-                      textStyle: TextStylesEnum.size28Medium,
+                      textStyle: TextStylesEnum.sizeNo18Responsive,
                       textAlign: TextAlign.center,
                       fontWeight: FontWeight.w700,
                       color: kColorWhite,
@@ -153,7 +158,6 @@ class GameScreenButton extends StatelessWidget {
         Visibility(
           visible: game.isRestartButton,
           child: Expanded(
-            flex: 7,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: ContainerButton(
