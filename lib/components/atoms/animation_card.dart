@@ -17,42 +17,66 @@ class AnimatedAlignExample extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (animationsEnum) {
       case AnimationsEnum.PLAYER_MOBILE:
-        return Center(
+        return Visibility(
+          visible: game.isAnimationVisibility,
+          child: Center(
           child: AnimatedAlign(
             alignment: game.startAnimation ? Alignment.bottomLeft : Alignment.center,
             duration: const Duration(seconds: 1),
             curve: Curves.fastOutSlowIn,
+            onEnd: () {
+              game.isAnimationVisibility = false;
+            },
             child: Image.network('https://www.deckofcardsapi.com/static/img/back.png', width: 150),
           ),
-        );
+        )
+       );
       case AnimationsEnum.PLAYER_WEB:
-        return Center(
+        return Visibility(
+          visible: game.isAnimationVisibility,
+          child: Center(
           child: AnimatedAlign(
             alignment: game.startAnimation ? Alignment.centerLeft : Alignment.center,
             duration: const Duration(seconds: 1),
             curve: Curves.fastOutSlowIn,
+            onEnd: () {
+              game.isAnimationVisibility = false;
+            },
             child: Image.network('https://www.deckofcardsapi.com/static/img/back.png', width: 150),
+          ),
           ),
         );
       case AnimationsEnum.MACHINE_MOBILE:
-        return Center(
+        return Visibility(
+          visible: game.isAnimationVisibility,
+          child: Center(
           child: AnimatedAlign(
             alignment: game.startAnimation ? Alignment.topLeft : Alignment.center,
             duration: const Duration(seconds: 1),
             curve: Curves.fastOutSlowIn,
+            onEnd: () {
+              game.isAnimationVisibility = false;
+            },
             child: Image.network('https://www.deckofcardsapi.com/static/img/back.png', width: 150),
           ),
+          )
         );
       case AnimationsEnum.MACHINE_WEB:
-        return Center(
-          child: AnimatedAlign(
-            alignment: game.startAnimation ? Alignment.centerRight : Alignment.center,
-            duration: const Duration(seconds: 1),
-            curve: Curves.fastOutSlowIn,
-            child: Image.network('https://www.deckofcardsapi.com/static/img/back.png', width: 150),
+        return Visibility(
+            visible: game.isAnimationVisibility,
+            child:Center(
+             child: AnimatedAlign(
+               alignment: game.startAnimation ? Alignment.centerRight : Alignment.center,
+               duration: const Duration(seconds: 1),
+               curve: Curves.fastOutSlowIn,
+               onEnd: () {
+                 game.isAnimationVisibility = false;
+               },
+              child: Image.network('https://www.deckofcardsapi.com/static/img/back.png', width: 150),
+            ),
           ),
         );
-      default:
+       default:
         return Container();
     }
   }
