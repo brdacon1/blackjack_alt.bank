@@ -11,7 +11,6 @@ import 'custom_text_size.dart';
 
 class PopupGame {
   bool _isLoading = false;
-
   filterNotify(TypePopupEnum popupEnum, BuildContext context, Game game) async {
     switch (popupEnum) {
       case TypePopupEnum.CONGRATULATIONS:

@@ -12,6 +12,7 @@ class Game extends BaseProvider {
   late bool playerWinner = false;
   late bool machineWinner = false;
   late bool isRestartButton = false;
+  late bool startAnimation = false;
   late DeckCards? deckGame;
   late TypePopupEnum typePopupEnum;
   List<CardModels?> selectCardPlayer = [];
