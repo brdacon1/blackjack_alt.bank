@@ -34,7 +34,7 @@ class GameScreenButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double buttonWidth = MediaQuery.of(context).size.width * 0.4; // Defina 40% da largura da tela
+    double buttonWidth = MediaQuery.of(context).size.width * 0.4;
     return isWebButton
         ? Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -44,7 +44,7 @@ class GameScreenButton extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: ContainerButton(
-                width: buttonWidth, // Usar a largura definida
+                width: buttonWidth,
                 height: buttonHeight,
                 borderRadius: 50,
                 backgroundColor: kGreenDarkColor,
@@ -81,7 +81,7 @@ class GameScreenButton extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: ContainerButton(
-                width: buttonWidth, // Usar a largura definida
+                width: buttonWidth,
                 height: buttonHeight,
                 borderRadius: 50,
                 backgroundColor: kGreenDarkColor,
@@ -111,16 +111,14 @@ class GameScreenButton extends StatelessWidget {
               ),
             ),
           ),
-        ])
-        : Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+        ]) : Row(mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Visibility(
           visible: !game.isRestartButton,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: ContainerButton(
-              width: buttonWidth, // Usar a largura definida
+              width: buttonWidth,
               height: buttonHeight,
               borderRadius: 50,
               backgroundColor: kGreenDarkColor,
@@ -159,7 +157,7 @@ class GameScreenButton extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: ContainerButton(
-              width: buttonWidth, // Usar a largura definida
+              width: buttonWidth,
               height: buttonHeight,
               borderRadius: 50,
               backgroundColor: kGreenDarkColor,
