@@ -34,105 +34,23 @@ class GameScreenButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double buttonWidth = MediaQuery.of(context).size.width * 0.4; // Defina 40% da largura da tela
     return isWebButton
         ? Row(
-         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-         children: [
-           Visibility(
-             visible: !game.isRestartButton,
-             child: Expanded(
-               child: Padding(
-                 padding: const EdgeInsets.symmetric(horizontal: 5),
-                 child: ContainerButton(
-                   width: 300,
-                   height: buttonHeight,
-                   borderRadius: 50,
-                   backgroundColor: kGreenDarkColor,
-                   borderColor: kColorWhite,
-                   onTap: () async {
-                     await game.playerPlaying(deck, updateParentState, showPopup);
-                     await Future.delayed(const Duration(milliseconds: 2500), () async {
-                       await game.machinePlaying(deck, updateParentState, showPopup);
-                     });
-                   },
-                   child: const Row(
-                     mainAxisSize: MainAxisSize.min,
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                       Icon(
-                         Icons.arrow_drop_down_circle_rounded,
-                         color: kColorWhite,
-                       ),
-                       SizedBox(width: 8),
-                       CustomTextSize(
-                         'Comprar carta',
-                         textStyle: TextStylesEnum.sizeNo18Responsive,
-                         textAlign: TextAlign.center,
-                         fontWeight: FontWeight.w700,
-                         color: kColorWhite,
-                       ),
-                     ],
-                   ),
-                 ),
-               ),
-             ),
-           ),
-           Visibility(
-             visible: game.isRestartButton,
-             child: Expanded(
-               flex: 7,
-               child: Padding(
-                 padding: const EdgeInsets.symmetric(horizontal: 5),
-                 child: ContainerButton(
-                   width: 300,
-                   height: buttonHeight,
-                   borderRadius: 50,
-                   backgroundColor: kGreenDarkColor,
-                   borderColor: kColorWhite,
-                   onTap: () async {
-                     await game.restartGame(deck, updateParentState, context, startScreen);
-                   },
-                   child: const Row(
-                     mainAxisSize: MainAxisSize.min,
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                       Icon(
-                         Icons.play_arrow,
-                         color: kColorWhite,
-                         size: 25,
-                       ),
-                       SizedBox(width: 8),
-                       CustomTextSize(
-                         'Recomeçar',
-                         textStyle: TextStylesEnum.sizeNo18Responsive,
-                         textAlign: TextAlign.center,
-                         fontWeight: FontWeight.w700,
-                         color: kColorWhite,
-                       ),
-                     ],
-                   ),
-                 ),
-               ),
-             ),
-           ),
-      ]) : Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-        Visibility(
-          visible: !game.isRestartButton,
-          child: Expanded(
+          Visibility(
+            visible: !game.isRestartButton,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: ContainerButton(
-                width: 300,
+                width: buttonWidth, // Usar a largura definida
                 height: buttonHeight,
                 borderRadius: 50,
                 backgroundColor: kGreenDarkColor,
                 borderColor: kColorWhite,
                 onTap: () async {
-                  await Future.delayed(const Duration(milliseconds: 1000));
                   await game.playerPlaying(deck, updateParentState, showPopup);
-
                   await Future.delayed(const Duration(milliseconds: 2500), () async {
                     await game.machinePlaying(deck, updateParentState, showPopup);
                   });
@@ -158,14 +76,12 @@ class GameScreenButton extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        Visibility(
-          visible: game.isRestartButton,
-          child: Expanded(
+          Visibility(
+            visible: game.isRestartButton,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: ContainerButton(
-                width: 300,
+                width: buttonWidth, // Usar a largura definida
                 height: buttonHeight,
                 borderRadius: 50,
                 backgroundColor: kGreenDarkColor,
@@ -192,6 +108,83 @@ class GameScreenButton extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+            ),
+          ),
+        ])
+        : Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Visibility(
+          visible: !game.isRestartButton,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: ContainerButton(
+              width: buttonWidth, // Usar a largura definida
+              height: buttonHeight,
+              borderRadius: 50,
+              backgroundColor: kGreenDarkColor,
+              borderColor: kColorWhite,
+              onTap: () async {
+                await Future.delayed(const Duration(milliseconds: 1000));
+                await game.playerPlaying(deck, updateParentState, showPopup);
+
+                await Future.delayed(const Duration(milliseconds: 2500), () async {
+                  await game.machinePlaying(deck, updateParentState, showPopup);
+                });
+              },
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.arrow_drop_down_circle_rounded,
+                    color: kColorWhite,
+                  ),
+                  SizedBox(width: 8),
+                  CustomTextSize(
+                    'Comprar carta',
+                    textStyle: TextStylesEnum.sizeNo18Responsive,
+                    textAlign: TextAlign.center,
+                    fontWeight: FontWeight.w700,
+                    color: kColorWhite,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Visibility(
+          visible: game.isRestartButton,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: ContainerButton(
+              width: buttonWidth, // Usar a largura definida
+              height: buttonHeight,
+              borderRadius: 50,
+              backgroundColor: kGreenDarkColor,
+              borderColor: kColorWhite,
+              onTap: () async {
+                await game.restartGame(deck, updateParentState, context, startScreen);
+              },
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.play_arrow,
+                    color: kColorWhite,
+                    size: 25,
+                  ),
+                  SizedBox(width: 8),
+                  CustomTextSize(
+                    'Recomeçar',
+                    textStyle: TextStylesEnum.sizeNo18Responsive,
+                    textAlign: TextAlign.center,
+                    fontWeight: FontWeight.w700,
+                    color: kColorWhite,
+                  ),
+                ],
               ),
             ),
           ),
