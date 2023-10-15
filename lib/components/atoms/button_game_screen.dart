@@ -1,3 +1,5 @@
+import 'package:blackjack/components/atoms/animation_card.dart';
+import 'package:blackjack/enums/animations_unum.dart';
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
 import '../../providers/deck.dart';
@@ -49,7 +51,7 @@ class GameScreenButton extends StatelessWidget {
                    borderColor: kColorWhite,
                    onTap: () async {
                      await game.playerPlaying(deck, updateParentState, showPopup);
-                     Future.delayed(const Duration(milliseconds: 3000), () async {
+                     await Future.delayed(const Duration(milliseconds: 2500), () async {
                        await game.machinePlaying(deck, updateParentState, showPopup);
                      });
                    },
@@ -128,8 +130,10 @@ class GameScreenButton extends StatelessWidget {
                 backgroundColor: kGreenDarkColor,
                 borderColor: kColorWhite,
                 onTap: () async {
+                  await Future.delayed(const Duration(milliseconds: 1000));
                   await game.playerPlaying(deck, updateParentState, showPopup);
-                  Future.delayed(const Duration(milliseconds: 3000), () async {
+
+                  await Future.delayed(const Duration(milliseconds: 2500), () async {
                     await game.machinePlaying(deck, updateParentState, showPopup);
                   });
                 },

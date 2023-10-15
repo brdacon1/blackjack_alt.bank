@@ -2,8 +2,10 @@ import 'package:blackjack/components/atoms/popup_game.dart';
 import 'package:blackjack/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../components/atoms/animation_card.dart';
 import '../components/atoms/button_game_screen.dart';
 import '../components/atoms/custom_text_size.dart';
+import '../enums/animations_unum.dart';
 import '../providers/deck.dart';
 import '../providers/game.dart';
 
@@ -21,7 +23,6 @@ class _GameScreen extends State<GameScreen> {
   late Game game;
   late double widthSizeBox = 0;
   late PopupGame showPopup;
-
 
   @override
   void initState() {
@@ -77,11 +78,21 @@ class _GameScreen extends State<GameScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     final barHeight = screenHeight * 0.10;
     final buttonHeight = game.calculateButtonHeight(context);
+    final cardWidth = (MediaQuery.of(context).size.width) * 0.25;
 
     return Scaffold(
       backgroundColor: Colors.green,
       body: Stack(
         children: [
+          Visibility(
+            child: Center(
+            child: AnimatedAlignExample(
+              deck: deck,
+              game: game,
+              cardWidth: cardWidth,
+            ),
+          )),
+
           isWeb ? _buildWebLayout() : _buildMobileLayout(),
           Positioned(
             width: MediaQuery.of(context).size.width,
@@ -103,13 +114,15 @@ class _GameScreen extends State<GameScreen> {
                 deck: deck,
                 isWebButton: isWebButton,
                 buttonHeight: buttonHeight,
-                isWeb: isWeb),
+                isWeb: isWeb,
+              ),
             ),
           ),
         ],
       ),
     );
   }
+
 
   Widget _buildWebLayout() {
     final selectCardPlayer = game.selectCardPlayer.reversed.toList();
@@ -236,10 +249,11 @@ class _GameScreen extends State<GameScreen> {
     return Column(
       children: [
         Expanded(
+          flex: 2,
           child: Container(
             alignment: Alignment.centerRight,
             width: totalWidth + (cardWidth * selectCardMachine.length),
-            padding: const EdgeInsets.only(top: 50, left: 20),
+            padding: const EdgeInsets.only(top: 10, left: 10),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SizedBox(
@@ -258,6 +272,7 @@ class _GameScreen extends State<GameScreen> {
           ),
         ),
         Expanded(
+          flex: 3,
           child: Column(
             children: [
               Row(
@@ -281,14 +296,14 @@ class _GameScreen extends State<GameScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 15),
               Expanded(
                 child: Align(
                   alignment: Alignment.center,
                   child: Image.network('https://www.deckofcardsapi.com/static/img/back.png', width: cardWidth),
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -314,10 +329,11 @@ class _GameScreen extends State<GameScreen> {
           ),
         ),
         Expanded(
+          flex: 2,
           child: Container(
             alignment: Alignment.centerRight,
             width: totalWidth + (cardWidth * selectCardPlayer.length),
-            padding: const EdgeInsets.only(top: 20, left: 20),
+            padding: const EdgeInsets.only(top: 10, left: 10),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SizedBox(

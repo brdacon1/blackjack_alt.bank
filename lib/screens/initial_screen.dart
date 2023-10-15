@@ -21,12 +21,9 @@ class InitialScreen extends StatefulWidget {
 }
 
 class _InitialScreen extends State<InitialScreen> {
-  final TextEditingController _userController = TextEditingController();
-  final FocusNode _userFocus = FocusNode();
   late Deck deck;
   late Game game;
   late PopupGame showPopup;
-  bool _submitted = false;
 
   @override
   void initState() {
@@ -41,29 +38,6 @@ class _InitialScreen extends State<InitialScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-  }
-
-  Widget _buildTextField() {
-    return TextFormField(
-      controller: _userController,
-      keyboardType: TextInputType.name,
-      focusNode: _userFocus,
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        labelText: 'Digite como quer ser chamado aqui',
-        prefixIcon: const Icon(Icons.person, color: kPrimaryColor),
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(50),
-          ),
-        ),
-        filled: true,
-        fillColor: kColorWhite,
-        errorText: _submitted && game.isFieldEmpty(_userController.text)
-            ? 'Este campo não pode estar vazio'
-            : null,
-      ),
-    );
   }
 
   Widget _buildLabel(TextStylesEnum localTextStyle,
@@ -116,21 +90,11 @@ class _InitialScreen extends State<InitialScreen> {
               "Iniciar jogo",
             ),
             onTap: () {
-              setState(() {
-                _submitted = true;
+              showPopup.filterNotify(TypePopupEnum.WAIT, context, game);
+              deck.getNewDeck().then((result) {
+                game.deckGame = result;
+                Navigator.of(context).pushNamed(GameScreen.routeName);
               });
-              if (game.isFieldEmpty(_userController.text)) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Por favor, preencha o campo de nome.'),
-                  ),
-                );
-              } else {
-                deck.getNewDeck().then((result) {
-                  game.deckGame = result;
-                  Navigator.of(context).pushNamed(GameScreen.routeName);
-                });
-              }
             },
           ),
         ],
@@ -151,23 +115,12 @@ class _InitialScreen extends State<InitialScreen> {
               color: kColorWhite,
             ),
             onTap: () async {
-              setState(() {
-                _submitted = true;
+              showPopup.filterNotify(TypePopupEnum.WAIT, context, game);
+              deck.getNewDeck().then((value) => {
+                game.deckGame = value,
+                showPopup.filterNotify(TypePopupEnum.CLOSE_WAIT, context, game),
+                Navigator.of(context).pushNamed(GameScreen.routeName)
               });
-              if (game.isFieldEmpty(_userController.text)) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Por favor, preencha o campo de nome.'),
-                  ),
-                );
-              } else {
-                showPopup.filterNotify(TypePopupEnum.WAIT, context, game);
-                deck.getNewDeck().then((value) => {
-                    game.deckGame = value,
-                    showPopup.filterNotify(TypePopupEnum.CLOSE_WAIT, context, game),
-                    Navigator.of(context).pushNamed(GameScreen.routeName)
-                });
-              }
             },
           ),
         ],
@@ -248,9 +201,7 @@ class _InitialScreen extends State<InitialScreen> {
                                   kColorGray,
                                   "Vamos começar?",
                                 ),
-                                SizedBox(height: calculateHeight(100, context)),
-                                _buildTextField(),
-                                SizedBox(height: calculateHeight(100, context)),
+                                SizedBox(height: calculateHeight(150, context)),
                                 _buildButton(),
                               ],
                             ),

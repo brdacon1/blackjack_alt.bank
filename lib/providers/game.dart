@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../enums/animations_unum.dart';
 import '../enums/type_popup.dart';
 import '../models/card_models.dart';
 import '../models/deck_cards_models.dart';
@@ -13,9 +14,12 @@ class Game extends BaseProvider {
   late bool machineWinner = false;
   late bool isRestartButton = false;
   late bool startAnimation = false;
-  late bool isAnimationVisibility = false;
+  late bool isAnimationVisible = false;
   late DeckCards? deckGame;
   late TypePopupEnum typePopupEnum;
+  late AnimationsEnum animationsEnum = AnimationsEnum.DEFAULT;
+
+
   List<CardModels?> selectCardPlayer = [];
   List<CardModels?> selectCardMachine = [];
 
@@ -63,7 +67,11 @@ class Game extends BaseProvider {
 
   Future<void> machinePlaying(Deck deck, VoidCallback updateParentState, VoidCallback showPopup) async {
     if (!playerWinner && !machineWinner) {
-      print("Machine is playing...");
+      animationsEnum = AnimationsEnum.MACHINE_MOBILE;
+      isAnimationVisible = true;
+      startAnimation = true;
+      updateParentState();
+
       selectCardMachine.add(await deck.getBuyCards(deckGame?.deckId));
       calculatePointCards(true);
       calculateWinner(showPopup);
@@ -73,7 +81,11 @@ class Game extends BaseProvider {
 
   Future<void> playerPlaying(Deck deck, VoidCallback updateParentState, VoidCallback showPopup) async {
     if (!playerWinner && !machineWinner) {
-      print("Player is playing...");
+      animationsEnum = AnimationsEnum.PLAYER_MOBILE;
+      isAnimationVisible = true;
+      startAnimation = true;
+      updateParentState();
+
       selectCardPlayer.add(await deck.getBuyCards(deckGame?.deckId));
       calculatePointCards(false);
       calculateWinner(showPopup);
@@ -85,6 +97,11 @@ class Game extends BaseProvider {
     deck = Provider.of<Deck>(context, listen: false);
     cleanProvider();
     deck.cleanProvider();
+    animationsEnum = AnimationsEnum.MACHINE_MOBILE;
+    isAnimationVisible = true;
+    startAnimation = true;
+    updateParentState();
+
     await deck.getNewDeck().then((result) {
       deckGame = result;
     });
@@ -93,6 +110,11 @@ class Game extends BaseProvider {
   }
 
   Future<void> startGame(Deck deck, VoidCallback updateParentState) async {
+    animationsEnum = AnimationsEnum.MACHINE_MOBILE;
+    isAnimationVisible = true;
+    startAnimation = true;
+    updateParentState();
+
     selectCardMachine.add(await deck.getBuyCards(deckGame?.deckId));
     calculatePointCards(true);
     updateParentState();
@@ -130,14 +152,18 @@ class Game extends BaseProvider {
     }
   }
 
+
   @override
   void cleanProvider() {
+    animationsEnum = AnimationsEnum.DEFAULT;
     deckGame = null;
     playerPoint = 0;
     machinePoint = 0;
     playerWinner = false;
     machineWinner = false;
     isRestartButton = false;
+    isAnimationVisible = false;
+    startAnimation = false;
     selectCardPlayer = [];
     selectCardMachine = [];
   }
