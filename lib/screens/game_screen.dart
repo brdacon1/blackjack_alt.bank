@@ -133,6 +133,7 @@ class _GameScreen extends State<GameScreen> {
     return Row(
       children: [
         Expanded(
+          flex: 2,
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -189,6 +190,7 @@ class _GameScreen extends State<GameScreen> {
           ),
         ),
         Expanded(
+          flex: 2,
           child: SingleChildScrollView(
             child: Column(
               children: [

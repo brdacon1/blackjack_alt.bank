@@ -13,8 +13,8 @@ class Game extends BaseProvider {
   late bool playerWinner = false;
   late bool machineWinner = false;
   late bool isRestartButton = false;
-  late bool startAnimation = false;
-  late bool isAnimationVisible = false;
+  late bool startAnimation = true;
+  late bool isAnimationVisible = true;
   late DeckCards? deckGame;
   late TypePopupEnum typePopupEnum;
   late AnimationsEnum animationsEnum = AnimationsEnum.DEFAULT;
@@ -155,15 +155,12 @@ class Game extends BaseProvider {
 
   @override
   void cleanProvider() {
-    animationsEnum = AnimationsEnum.DEFAULT;
     deckGame = null;
     playerPoint = 0;
     machinePoint = 0;
     playerWinner = false;
     machineWinner = false;
     isRestartButton = false;
-    isAnimationVisible = false;
-    startAnimation = false;
     selectCardPlayer = [];
     selectCardMachine = [];
   }
