@@ -1,5 +1,3 @@
-import 'package:blackjack/components/atoms/animation_card.dart';
-import 'package:blackjack/enums/animations_unum.dart';
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
 import '../../providers/deck.dart';
@@ -112,8 +110,8 @@ class GameScreenButton extends StatelessWidget {
             ),
           ),
         ]) : Row(mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Visibility(
+         children: [
+          Visibility(
           visible: !game.isRestartButton,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
